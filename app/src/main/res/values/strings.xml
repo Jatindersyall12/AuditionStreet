@@ -1,0 +1,156 @@
+<resources>
+    <string name="app_name">Audition</string>
+    <string name="action_settings">Setting</string>
+    <!--SignUp Fragment -->
+    <string name="str_login">Sign In Fragment</string>
+    <string name="str_welcome">Welcome,</string>
+    <string name="str_create_account">Create account to continue!</string>
+    <string name="str_email">Please enter email</string>
+    <string name="str_user_name">Please enter user name</string>
+    <string name="str_password">password</string>
+    <string name="str_social_type">socialType</string>
+    <string name="str_socialId">socialId</string>
+    <string name="str_isSocial">isSocial</string>
+    <string name="str_facebook">Facebook</string>
+    <string name="str_social_email">email</string>
+    <string name="str_social_id">id</string>
+    <string name="str_social_first_name">first_name</string>
+    <string name="str_social_last_name">last_name</string>
+    <string name="err_email_msg">Email address already exist</string>
+
+    <string name="str_confirm_password">Please enter password again</string>
+    <string name="str_pwd">Please enter password</string>
+
+    <string name="str_sign_up">SignUp</string>
+    <string name="gallery_select_title_msg">Tap to select</string>
+    <string name="folder">Folder</string>
+    <string name="str_username">name</string>
+    <string name="str_useremail">email</string>
+    <string name="err_user_name">Please enter user name</string>
+    <string name="err_email">Please enter email</string>
+    <string name="err_password">Please enter password</string>
+    <string name="err_confirm_password">Please enter confirm password</string>
+    <string name="err_valid_email">Please enter valid email</string>
+    <string name="err_password_lenght">Password should be 6 characters</string>
+    <string name="err_passwrd_confirm">Password and confirm password does not match</string>
+    <string name="err_facebook_authentication_fail">Please try again later</string>
+
+
+    <!--SignIn Fragment -->
+    <string name="str_true">true</string>
+    <string name="str_false">false</string>
+
+    <string name="str_sign_in">Sign in to continue!</string>
+    <string name="str_sign_in_text">Sign In</string>
+    <string name="str_email_tv">Email</string>
+    <string name="str_password_tv">Password</string>
+    <string name="str_or_via">or via</string>
+    <string name="str_dont_have">Don\'t have an account?<font fgcolor='#FF773B'> Sign Up</font> </string>
+    <string name="err_invalid_credentials">Invalid credentials</string>
+    <string name="err_no_network_available">Please check your internet connection and try again later.</string>
+    <string name="err_empty_email">Please enter email</string>
+    <string name="err_empty_password">Please enter password</string>
+
+    <!-- Tab Bar -->
+    <string name="str_home">Home</string>
+    <string name="str_project">Projects</string>
+    <string name="str_chat">Chat</string>
+    <string name="str_account">Account</string>
+
+    <!-- other user  -->
+    <string name="str_experiances">Experiance</string>
+    <string name="str_applied_project">Applied Projects</string>
+    <string name="str_home_selected_project">Selected Projects</string>
+    <string name="str_image">Images</string>
+    <string name="str_video">Videos</string>
+    <string name="str_bio">Bio</string>
+
+    <!-- Home Fragment -->
+
+    <string name="str_home_fragment">Home Fragment</string>
+    <string name="str_shortlist">Shortlisted</string>
+    <string name="str_application">Applications</string>
+    <string name="str_view_all">View All</string>
+    <string name="str_coming_soon">Coming Soon..</string>
+    <string name="str_view_details">View Details</string>
+    <string name="str_view_profile">View Profile</string>
+
+    <!-- ShortList Fragment -->
+    <string name="str_shortlist_frag">ShortList Fragment</string>
+
+
+    <!-- Facebook -->
+
+    <string name="facebook_app_id">905675953315141</string>
+    <string name="fb_login_protocol_scheme">fb905675953315141</string>
+
+    <!-- Profile Fragment -->
+    <string name="str_profile">Profile Fragment</string>
+    <string name="str_profile_heading">Profile</string>
+
+    <!-- other user profile Fragment -->
+    <string name="str_other_user_profile">Other User Profile Fragment</string>
+
+    <!-- Projects Fragment -->
+    <string name="str_projects">Project Fragment</string>
+    <string name="str_no_projects">You Don\'t have any active Project</string>
+    <string name="str_create_project">Create Project</string>
+    <string name="str_add_project">Add Project</string>
+    <string name="str_view_detail">View Details</string>
+    <string name="str_project_heading">Project:</string>
+    <string name="str_project_detail">Project Detail</string>
+
+    <!-- Projects detail -->
+    <string name="str_criteria">Criteria:</string>
+    <string name="str_age">Age:</string>
+    <string name="str_height">Height:</string>
+    <string name="str_languages">Languages:</string>
+    <string name="str_dates">Shooting Dates:</string>
+    <string name="str_location">Location:</string>
+    <string name="str_description">Description:</string>
+    <string name="str_to">\u0020to\u0020</string>
+    <string name="str_empty">- -</string>
+
+    <!-- Add Project -->
+
+    <string name="str_title">Title of Project</string>
+    <string name="str_add_title">Add Title</string>
+    <string name="str_crtria">Criteria</string>
+    <string name="str_male">Male</string>
+    <string name="str_female">Female</string>
+    <string name="str_age_range">Age Range :\u0020</string>
+    <string name="str_height_ft">Height(Ft)</string>
+    <string name="str_height_In">Height(In)</string>
+    <string name="str_body_type">Body Type</string>
+    <string name="str_experiance">Experiance</string>
+    <string name="str_language">Language</string>
+    <string name="str_shooting_Date">Shooting Date</string>
+    <string name="str_date_start">Select Start Date</string>
+    <string name="str_date_end">Select End Date</string>
+    <string name="str_no_admin_found">No admin found.Please add admin first.</string>
+    <string name="str_no_user">No user found to create group admin</string>
+
+    <string name="str_divider">-</string>
+    <string name="str_locatn">Add Location</string>
+    <string name="str_dates_project">Shooting Dates</string>
+    <string name="str_location_project">Location</string>
+    <string name="str_desc">Description</string>
+    <string name="str_type">Type here...</string>
+    <string name="str_subadmin">Sub-Admins</string>
+    <string name="str_create">Create</string>
+    <string name="str_admin">Please select admins</string>
+    <string name="str_select_admin">Select Admins</string>
+    <string name="str_ok">Ok</string>
+    <string name="str_start_Date">Please select start date first</string>
+    <string name="dd_mm_yy">dd/MM/yy</string>
+    <string name="mm_dd_yy">MMM, dd yyyy</string>
+    <string name="str_add_edit_admins">Add or edit admin members</string>
+    <string name="str_create_edit_group">Select members to add or update</string>
+    <string name="str_error_title">Please enter title</string>
+    <string name="str_error_desc">Please enter Description</string>
+    <string name="str_error_body_type">Please enter body type</string>
+    <string name="str_select_start_Date">Please select start date</string>
+    <string name="str_select_end_Date">Please select end date</string>
+    <string name="str_height_ft_msg">Please enter height in FT </string>
+
+</resources>
