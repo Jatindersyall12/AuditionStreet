@@ -1,0 +1,45 @@
+com/yuyakaido/android/cardstackview/internal/AnimationSetting.java
+ com.yuyakaido.android.cardstackview.internal.AnimationSetting
+com/yuyakaido/android/cardstackview/RewindAnimationSetting.java
+ com.yuyakaido.android.cardstackview.RewindAnimationSetting
+ com.yuyakaido.android.cardstackview.RewindAnimationSetting$1
+ com.yuyakaido.android.cardstackview.RewindAnimationSetting$Builder
+com/yuyakaido/android/cardstackview/SwipeAnimationSetting.java
+ com.yuyakaido.android.cardstackview.SwipeAnimationSetting
+ com.yuyakaido.android.cardstackview.SwipeAnimationSetting$1
+ com.yuyakaido.android.cardstackview.SwipeAnimationSetting$Builder
+com/yuyakaido/android/cardstackview/internal/CardStackState.java
+ com.yuyakaido.android.cardstackview.internal.CardStackState
+ com.yuyakaido.android.cardstackview.internal.CardStackState$1
+ com.yuyakaido.android.cardstackview.internal.CardStackState$Status
+com/yuyakaido/android/cardstackview/internal/CardStackSmoothScroller.java
+ com.yuyakaido.android.cardstackview.internal.CardStackSmoothScroller
+ com.yuyakaido.android.cardstackview.internal.CardStackSmoothScroller$1
+ com.yuyakaido.android.cardstackview.internal.CardStackSmoothScroller$ScrollType
+com/yuyakaido/android/cardstackview/internal/CardStackDataObserver.java
+ com.yuyakaido.android.cardstackview.internal.CardStackDataObserver
+com/yuyakaido/android/cardstackview/Direction.java
+ com.yuyakaido.android.cardstackview.Direction
+com/yuyakaido/android/cardstackview/CardStackView.java
+ com.yuyakaido.android.cardstackview.CardStackView
+com/yuyakaido/android/cardstackview/Duration.java
+ com.yuyakaido.android.cardstackview.Duration
+com/yuyakaido/android/cardstackview/SwipeableMethod.java
+ com.yuyakaido.android.cardstackview.SwipeableMethod
+com/yuyakaido/android/cardstackview/BuildConfig.java
+ com.yuyakaido.android.cardstackview.BuildConfig
+com/yuyakaido/android/cardstackview/internal/CardStackSetting.java
+ com.yuyakaido.android.cardstackview.internal.CardStackSetting
+com/yuyakaido/android/cardstackview/internal/CardStackSnapHelper.java
+ com.yuyakaido.android.cardstackview.internal.CardStackSnapHelper
+com/yuyakaido/android/cardstackview/CardStackLayoutManager.java
+ com.yuyakaido.android.cardstackview.CardStackLayoutManager
+ com.yuyakaido.android.cardstackview.CardStackLayoutManager$1
+ com.yuyakaido.android.cardstackview.CardStackLayoutManager$2
+com/yuyakaido/android/cardstackview/CardStackListener.java
+ com.yuyakaido.android.cardstackview.CardStackListener
+ com.yuyakaido.android.cardstackview.CardStackListener$1
+com/yuyakaido/android/cardstackview/StackFrom.java
+ com.yuyakaido.android.cardstackview.StackFrom
+com/yuyakaido/android/cardstackview/internal/DisplayUtil.java
+ com.yuyakaido.android.cardstackview.internal.DisplayUtil

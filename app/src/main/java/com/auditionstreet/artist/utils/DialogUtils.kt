@@ -165,6 +165,45 @@ fun showMediaDialog(
     dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
     return dialogView
 }
+fun showIntroVideoDialog(
+    mContext: Context,
+    mCallback: (pos: Int) -> Unit
+
+): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_intro_video,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val tvGallery = dialogView.findViewById<CustomTextViewBold>(R.id.tvChooseGallery)
+    val tvCaptureVideo = dialogView.findViewById<CustomTextViewBold>(R.id.tvCaptureVideo)
+    val tvCancel = dialogView.findViewById<CustomTextViewBold>(R.id.tvCancel)
+
+    tvGallery.setOnClickListener {
+        mCallback.invoke(0)
+        dialogView.dismiss()
+    }
+    tvCaptureVideo.setOnClickListener {
+        dialogView.dismiss()
+        mCallback.invoke(1)
+    }
+    tvCancel.setOnClickListener {
+        dialogView.dismiss()
+        mCallback.invoke(2)
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = 600
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
 
 fun showAllUser(
     mContext: Context,

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
@@ -48,6 +49,8 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     private var images: MutableList<com.esafirm.imagepicker.model.Image> = mutableListOf()
     private var profileImageFile: File? = null
     private var selectedImage = ""
+    private var isIntroVideo: Boolean = false
+
     private var compressImage = CompressFile()
 
     @Inject
@@ -76,6 +79,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.imgEdit.setOnClickListener(this)
         binding.tvDone.setOnClickListener(this)
         binding.imgProfile.setOnClickListener(this)
+        binding.imgIntroVideo.setOnClickListener(this)
     }
 
 
@@ -153,6 +157,14 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                     )
                 )
             }
+            R.id.imgIntroVideo -> {
+                mPermissionIntroVideo.launch(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                )
+            }
             R.id.imgEdit -> {
                 showDoneButton()
                 enableOrDisable(true)
@@ -168,6 +180,18 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         }
     }
 
+    private fun showIntroVideoDialog() {
+        showIntroVideoDialog(requireActivity())
+        {
+            if (it == 0) {
+                isIntroVideo = true
+                openVideoGallery()
+            } else if (it == 1) {
+                openCameraVideo()
+            }
+        }
+    }
+
     private fun showMedia() {
         showMediaDialog(requireActivity())
         {
@@ -175,18 +199,36 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 if (totalGalleryImages < 4)
                     pickImage(picker_gallery, false, 4 - totalGalleryImages)
                 else
-                    showVideoOrImageValidation(requireActivity(),resources.getString(R.string.str_image_error))
+                    showVideoOrImageValidation(
+                        requireActivity(),
+                        resources.getString(R.string.str_image_error)
+                    )
             else if (it == 1) {
                 if (totalGalleryVideos < 1) {
-                    val intent = Intent()
-                    intent.type = "video/*"
-                    intent.action = Intent.ACTION_PICK
-                    Intent.createChooser(intent, "Select Video")
-                    startForResult.launch(intent)
+                    isIntroVideo = false
+                    openVideoGallery()
                 } else
-                    showVideoOrImageValidation(requireActivity(),resources.getString(R.string.str_video_error))
+                    showVideoOrImageValidation(
+                        requireActivity(),
+                        resources.getString(R.string.str_video_error)
+                    )
             }
         }
+    }
+
+    private fun openVideoGallery() {
+        val intent = Intent()
+        intent.type = "video/*"
+        intent.action = Intent.ACTION_PICK
+        Intent.createChooser(intent, "Select Video")
+        startForResult.launch(intent)
+    }
+
+    private fun openCameraVideo() {
+        val intent = Intent()
+        intent.action = MediaStore.ACTION_VIDEO_CAPTURE
+        startForResult.launch(intent)
+        isIntroVideo = true
     }
 
     private fun enableOrDisable(b: Boolean) {
@@ -282,13 +324,18 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 val request = WorkGalleryRequest()
                 processVideo(result.data!!.data!!, requireActivity())
                 { path: String ->
-                    request.path = path
-                    request.isImage = false
-                    request.isShowDeleteImage = true
-                    listGallery.add(0, request)
-                    profileAdapter.notifyDataSetChanged()
-                    totalGalleryVideos++
-                    showGalleryView(true)
+                    if (isIntroVideo) {
+                        Glide.with(this).load(path)
+                            .into(binding.imgIntroVideo)
+                    } else {
+                        request.path = path
+                        request.isImage = false
+                        request.isShowDeleteImage = true
+                        listGallery.add(0, request)
+                        profileAdapter.notifyDataSetChanged()
+                        totalGalleryVideos++
+                        showGalleryView(true)
+                    }
                 }
             }
         }
@@ -303,15 +350,27 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         }
     }
 
-    val mPermissionResult =
+    val mPermissionIntroVideo =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            var permission:Int=0
+            var permission: Int = 0
             permissions.entries.forEach {
                 Log.e("DEBUG", "${it.key} = ${it.value}")
-                if(it.value)
-                permission++
+                if (it.value)
+                    permission++
             }
-            if(permission==2)
-            showMedia()
+            if (permission == 2)
+                showIntroVideoDialog()
+        }
+
+    val mPermissionResult =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            var permission: Int = 0
+            permissions.entries.forEach {
+                Log.e("DEBUG", "${it.key} = ${it.value}")
+                if (it.value)
+                    permission++
+            }
+            if (permission == 2)
+                showMedia()
         }
 }
