@@ -107,7 +107,8 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLength="20"
-                android:paddingLeft="@dimen/_10sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_13sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddProfileImage" />
@@ -131,10 +132,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/etxUserName" />
 
             <com.auditionstreet.artist.customviews.CustomEditText
+                android:id="@+id/etxPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:background="@drawable/edittext_round_layout"
+                android:gravity="center_vertical"
+                android:hint="@string/str_mobile_number"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="10"
+                android:paddingStart="@dimen/_10sdp"
+                android:textSize="@dimen/_13sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etxEmail" />
+
+            <com.auditionstreet.artist.customviews.CustomEditText
                 android:id="@+id/etxPassword"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-
                 android:layout_marginLeft="@dimen/_30sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_30sdp"
@@ -148,7 +166,7 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_13sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etxEmail" />
+                app:layout_constraintTop_toBottomOf="@+id/etxPhoneNumber" />
 
             <com.auditionstreet.artist.customviews.CustomEditText
                 android:id="@+id/etxConfirmPassword"

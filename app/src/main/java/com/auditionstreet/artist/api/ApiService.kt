@@ -5,6 +5,7 @@ import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_PROJECT
 import com.auditionstreet.artist.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.artist.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.artist.api.ApiConstant.Companion.SIGN_UP
+import com.auditionstreet.artist.api.ApiConstant.Companion.UPLOAD_MEDIA
 import com.auditionstreet.artist.model.response.*
 import com.silo.model.request.AddGroupRequest
 import com.silo.model.request.AddProjectRequest
@@ -20,6 +21,7 @@ import java.util.*
 
 
 interface ApiService {
+
     @POST(LOGIN)
     suspend fun userLogin(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
@@ -31,6 +33,12 @@ interface ApiService {
 
     @GET
     suspend fun getProfile(@Url url: String): Response<ProfileResponse>
+
+    @Multipart
+    @POST(UPLOAD_MEDIA)
+    suspend fun uploadMedia(
+        @Part photo: List<MultipartBody.Part?>
+    ): Response<UploadMediaResponse>
 
     @GET
     suspend fun getAllAdmin(@Url url: String): Response<AllAdminResponse>

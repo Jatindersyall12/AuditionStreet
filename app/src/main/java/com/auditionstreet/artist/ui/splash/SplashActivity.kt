@@ -31,7 +31,6 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        Log.e("sdsd", printKeyHash(this)!!)
         lifecycleScope.launch {
             delay(3000)
             if (preferences.getString(AppConstants.USER_ID).isEmpty()) {

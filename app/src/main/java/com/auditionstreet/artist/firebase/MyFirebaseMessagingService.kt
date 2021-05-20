@@ -5,13 +5,17 @@ import com.auditionstreet.artist.storage.preference.Preferences
 import com.auditionstreet.artist.utils.AppConstants
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+
     @Inject
     lateinit var preferences: Preferences
 
     override fun onNewToken(token: String) {
+        Log.e("tokenn", "tokenn" + token)
         preferences.setString(AppConstants.FIREBASE_ID, token)
     }
 

@@ -81,6 +81,7 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                     binding.etxEmail.text.toString(),
                     binding.etxPassword.text.toString(),
                     binding.etxConfirmPassword.text.toString(),
+                    binding.etxPhoneNumber.text.toString(),
                     requestSignUp(
                         resources.getString(R.string.str_facebook),
                         "",
@@ -182,6 +183,9 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 toRequestBody(binding.etxEmail.text.toString().trim())
             map[resources.getString(R.string.str_password)] =
                 toRequestBody(binding.etxPassword.text.toString().trim())
+            map[resources.getString(R.string.str_mobile)] =
+                toRequestBody(binding.etxPhoneNumber.text.toString().trim())
+
         } else {
             map[resources.getString(R.string.str_username)] =
                 toRequestBody(userName)
@@ -189,8 +193,13 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 toRequestBody(email)
             map[resources.getString(R.string.str_password)] =
                 toRequestBody("")
+            map[resources.getString(R.string.str_mobile)] =
+                toRequestBody("")
+
             selectedImage = ""
         }
+        map[resources.getString(R.string.str_token)] =
+            toRequestBody(preferences.getString(AppConstants.FIREBASE_ID))
         map[resources.getString(R.string.str_social_type)] =
             toRequestBody(socialType)
         map[resources.getString(R.string.str_socialId)] =

@@ -11,10 +11,7 @@ import com.auditionstreet.artist.databinding.ActivityHomeBinding
 import com.auditionstreet.artist.storage.preference.Preferences
 import com.auditionstreet.artist.ui.projects.activity.ProfileActivity
 import com.auditionstreet.artist.ui.projects.activity.ProjectsActivity
-import com.auditionstreet.artist.utils.AppConstants
-import com.auditionstreet.artist.utils.DataHelper
-import com.auditionstreet.artist.utils.closeAppDialog
-import com.auditionstreet.artist.utils.showToast
+import com.auditionstreet.artist.utils.*
 import com.bumptech.glide.Glide
 import com.silo.ui.base.BaseActivity
 import com.silo.utils.changeIcons
@@ -142,7 +139,7 @@ class HomeActivity : BaseActivity() {
             supportFragmentManager.findFragmentById(R.id.navHostHomeFragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
         if (navController.graph.startDestination == navController.currentDestination?.id)
-            closeAppDialog(this)
+             showExitDialog(this)
         else
             super.onBackPressed()
     }

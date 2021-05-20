@@ -2,7 +2,7 @@ package com.auditionstreet.artist.utils
 
 object AppConstants {
 
-    const val PREFERENCE_CASTING_DIRETOR ="PreferenceArtist"
+    const val PREFERENCE_CASTING ="PreferenceArtist"
     const val TRACK_NINJA_DB="track_ninja.db"
     var PROFILE_ID=0
     const val GOOGLE_SIGNIN = 9001

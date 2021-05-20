@@ -105,6 +105,7 @@ class SignUpViewModel @ViewModelInject constructor(
         email: String,
         password: String,
         confirmPassword: String,
+        mobileNumber: String,
         requestSignUp: HashMap<String, RequestBody>,
         profileImageFile: File?,
         selectedImage: String
@@ -125,6 +126,16 @@ class SignUpViewModel @ViewModelInject constructor(
                     Resource.requiredResource(
                         ApiConstant.SIGN_UP,
                         R.string.err_email
+                    )
+                )
+            )
+            return
+        } else if (TextUtils.isEmpty(mobileNumber)) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.str_mobile_number
                     )
                 )
             )
@@ -155,6 +166,16 @@ class SignUpViewModel @ViewModelInject constructor(
                     Resource.requiredResource(
                         ApiConstant.SIGN_UP,
                         R.string.err_valid_email
+                    )
+                )
+            )
+            return
+        } else if (mobileNumber.length < 10) {
+            _sign_up.postValue(
+                Event(
+                    Resource.requiredResource(
+                        ApiConstant.SIGN_UP,
+                        R.string.str_mobile_number_less_then
                     )
                 )
             )

@@ -30,17 +30,18 @@ class ApiConstant {
         const val VIDEO_ENTITY = "video/mp4"
         const val FORM_DATA = "multipart/form-data"
         const val PUBLIC_PROFILE = "&public_profile=true"
+        const val LOGIN = "artistLogin"
 
-        const val LOGIN = "castingLogin"
         const val GET_PROJECTS = ""
         const val GET_MY_PROJECTS = "projectList"
         const val GET_MY_PROJECTS_DETAILS = "projectDetail"
         const val GET_ALL_ADMINS = "groupMemberList"
         const val GET_ALL_USER = "getAllUser"
         const val ADD_PROJECT = "projectCreate"
-        const val SIGN_UP = "castingSignup"
+        const val SIGN_UP = "artistSignup"
         const val GET_PROFILE = "profile"
         const val ADD_GROUP = "groupCreate"
+        const val UPLOAD_MEDIA = "imageUploadPost"
 
     }
 }

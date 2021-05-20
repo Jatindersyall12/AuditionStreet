@@ -26,13 +26,11 @@ class ProfileActivity : BaseActivity() {
     private lateinit var bottomBarText: ArrayList<TextView>
     private lateinit var activeIcons: ArrayList<Int>
     private lateinit var inActiveIcons: ArrayList<Int>
-
     @Inject
     lateinit var preferences: Preferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setUpToolbar(toolbar,getString(R.string.str_profile_heading),false,false)
         setNavigationController()
         imageIcons = arrayListOf(
             binding.footerHome.homeButton,
