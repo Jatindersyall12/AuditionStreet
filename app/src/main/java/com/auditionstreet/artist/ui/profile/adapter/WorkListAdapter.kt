@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.artist.R
+import com.auditionstreet.artist.utils.showDeleteDialog
 import com.auditionstreet.artist.utils.showImageOrVideoDialog
 import com.bumptech.glide.Glide
 import com.silo.model.request.WorkGalleryRequest
@@ -57,13 +58,12 @@ class WorkListAdapter(
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
                 holder.itemView.imgDelete.setOnClickListener {
-                    mCallback.invoke(position)
+                    showDeleteDialog(mContext)
+                    {
+                        mCallback.invoke(position)
+                    }
                 }
-                /* holder.itemView.chkUser.setOnCheckedChangeListener { buttonView, isChecked ->
-                     differ.currentList[position].isChecked = !differ.currentList[position].isChecked
-                     // holder.itemView.chkUser.isChecked=!differ.currentList[position].isChecked
-                     // notifyDataSetChanged()
-                 }*/
+
             }
         }
     }

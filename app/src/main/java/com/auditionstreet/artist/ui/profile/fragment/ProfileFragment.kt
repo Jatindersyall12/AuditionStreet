@@ -18,7 +18,9 @@ import com.auditionstreet.artist.BuildConfig
 import com.auditionstreet.artist.R
 import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentProfileBinding
+import com.auditionstreet.artist.model.response.DeleteMediaResponse
 import com.auditionstreet.artist.model.response.ProfileResponse
+import com.auditionstreet.artist.model.response.UploadMediaResponse
 import com.auditionstreet.artist.storage.preference.Preferences
 import com.auditionstreet.artist.ui.profile.viewmodel.ProfileViewModel
 import com.auditionstreet.artist.ui.projects.adapter.WorkListAdapter
@@ -32,8 +34,15 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_profile.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+import kotlin.collections.set
 
 
 @AndroidEntryPoint
@@ -45,25 +54,31 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     private val picker_gallery = 4000
     private var totalGalleryImages = 0
     private var totalGalleryVideos = 0
-    val listGallery = ArrayList<WorkGalleryRequest>()
+    var listGallery = ArrayList<WorkGalleryRequest>()
+    val uploadMedia = ArrayList<WorkGalleryRequest>()
+
     private var images: MutableList<com.esafirm.imagepicker.model.Image> = mutableListOf()
     private var profileImageFile: File? = null
-    private var selectedImage = ""
-    private var isIntroVideo: Boolean = false
-
     private var compressImage = CompressFile()
-
     @Inject
     lateinit var preferences: Preferences
     private lateinit var profileResponse: ProfileResponse
 
+    private lateinit var uploadMediaResponse: UploadMediaResponse
+    private lateinit var mediaDelete: DeleteMediaResponse
+    private var selectedImage = ""
+    private var isIntroVideo: Boolean = false
+    private var isImageDelete: Boolean = false
+    private var deleteMediaPos: Int = 0
+
+    private var introVideoPath: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
+        init()
         setObservers()
         getUserProfile()
-        init()
     }
 
     private fun getUserProfile() {
@@ -80,6 +95,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.tvDone.setOnClickListener(this)
         binding.imgProfile.setOnClickListener(this)
         binding.imgIntroVideo.setOnClickListener(this)
+        binding.imgPlay.setOnClickListener(this)
+        binding.imgDelete.setOnClickListener(this)
+
     }
 
 
@@ -88,6 +106,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             handleApiCallback(it)
         })
         viewModel.uploadMedia.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModel.deleteMedia.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
 
@@ -103,7 +124,21 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                         setWorkAdapter(profileResponse)
                     }
                     ApiConstant.UPLOAD_MEDIA -> {
-                        showToast(requireActivity(), "Uploaded succesfully")
+                        uploadMediaResponse = apiResponse.data as UploadMediaResponse
+                        showToast(requireActivity(), uploadMediaResponse.msg.toString())
+                        showImgEdit()
+                        enableOrDisable(false)
+                        getUserProfile()
+                    }
+                    ApiConstant.DELETE_MEDIA -> {
+                        mediaDelete = apiResponse.data as DeleteMediaResponse
+                        showToast(requireActivity(), mediaDelete.msg.toString())
+                        if (isImageDelete)
+                            totalGalleryImages--
+                        else
+                            totalGalleryVideos--
+                        listGallery.removeAt(deleteMediaPos)
+                        profileAdapter.notifyDataSetChanged()
                     }
                 }
             }
@@ -125,25 +160,44 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     }
 
     private fun setWorkAdapter(profileResponse: ProfileResponse) {
-        for (i in 0..profileResponse.data.size) {
+
+        if (profileResponse.data!![0]!!.artistDetails!!.image!!.isNotEmpty()) {
+            Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.image)
+                .into(binding.imgProfile)
+        }
+        binding.etxName.setText(profileResponse.data[0]!!.artistDetails!!.name)
+        binding.etxSubName.setText(profileResponse.data[0]!!.artistDetails!!.gender)
+        binding.etxYear.setText(profileResponse.data[0]!!.artistDetails!!.year)
+        binding.etxAge.setText(profileResponse.data[0]!!.artistDetails!!.age)
+        binding.etxHeightFt.setText(profileResponse.data[0]!!.artistDetails!!.heightFt)
+        binding.etxHeightIn.setText(profileResponse.data[0]!!.artistDetails!!.heightIn)
+        binding.etxBodyType.setText(profileResponse.data[0]!!.artistDetails!!.bodyType)
+        binding.etxSkinTone.setText(profileResponse.data[0]!!.artistDetails!!.skinTone)
+        binding.etxLanguage.setText(profileResponse.data[0]!!.artistDetails!!.language)
+
+        if (profileResponse.data[0]!!.artistDetails!!.video!!.isNotEmpty()) {
+            Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.video)
+                .into(binding.imgIntroVideo)
+            binding.imgPlay.visibility = View.VISIBLE
+            introVideoPath = profileResponse.data[0]!!.artistDetails!!.video.toString()
+        }
+        listGallery.clear()
+        for (i in 0 until profileResponse.data[0]!!.media!!.size) {
             val request = WorkGalleryRequest()
-            request.path = images[i].path
-            request.isImage = true
-            request.isShowDeleteImage = true
+            request.path = profileResponse.data[0]!!.media!![i]!!.mediaUrl!!
+            request.isShowDeleteImage = false
+            request.isLocal = false
+            request.isImage =
+                profileResponse.data[0]!!.media!![i]!!.mediaType.equals(resources.getString(R.string.str_img))
             listGallery.add(request)
-            profileAdapter.notifyDataSetChanged()
         }
         if (listGallery.size > 0) {
             showGalleryView(true)
         } else {
             showGalleryView(false)
         }
-        Glide.with(this).load(profileImageFile)
-            .into(binding.imgProfile)
-        binding.etxName.setText("Sd")
-        binding.etxSubName.setText("Sd")
-        binding.etxYearinIndustry.setText("Sd")
-        binding.etxBio.setText("Sd")
+        profileAdapter.notifyDataSetChanged()
+        binding.etxBio.setText(profileResponse.data[0]!!.artistDetails!!.bio)
 
     }
 
@@ -158,24 +212,42 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 )
             }
             R.id.imgIntroVideo -> {
-                mPermissionIntroVideo.launch(
-                    arrayOf(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                )
+
             }
             R.id.imgEdit -> {
                 showDoneButton()
                 enableOrDisable(true)
             }
             R.id.tvDone -> {
-                showImgEdit()
-                enableOrDisable(false)
-                viewModel.uploadMedia(listGallery)
+                if (introVideoPath.contains("http"))
+                    introVideoPath = ""
+                uploadMedia.clear()
+                for (i in 0 until listGallery.size) {
+                    if (listGallery[i].isLocal)
+                        uploadMedia.add(listGallery[i])
+                }
+                viewModel.uploadMedia(
+                    uploadMedia,
+                    profileImageFile,
+                    selectedImage,
+                    introVideoPath,
+                    requestProfileUpdate()
+                )
             }
             R.id.imgProfile -> {
                 pickImage(picker, true, 1)
+            }
+            R.id.imgPlay -> {
+                showImageOrVideoDialog(requireActivity(), introVideoPath, false)
+            }
+            R.id.imgDelete -> {
+                mPermissionIntroVideo.launch(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA,
+                    )
+                )
             }
         }
     }
@@ -227,33 +299,41 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     private fun openCameraVideo() {
         val intent = Intent()
         intent.action = MediaStore.ACTION_VIDEO_CAPTURE
+        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
         startForResult.launch(intent)
         isIntroVideo = true
     }
 
     private fun enableOrDisable(b: Boolean) {
         binding.etxName.isEnabled = b
-        binding.etxSubName.isEnabled = b
         binding.etxYear.isEnabled = b
         binding.etxBio.isEnabled = b
         binding.imgProfile.isClickable = b
-
-        for (i in 0 until listGallery.size) {
-            listGallery.get(i).isShowDeleteImage = true
-            profileAdapter.notifyDataSetChanged()
-        }
+        binding.etxAge.isEnabled = b
+        binding.etxHeightFt.isEnabled = b
+        binding.etxHeightIn.isEnabled = b
+        binding.etxBodyType.isEnabled = b
+        binding.etxSkinTone.isEnabled = b
+        binding.etxLanguage.isEnabled = b
     }
 
     private fun showDoneButton() {
         binding.imgEdit.visibility = View.GONE
         binding.tvDone.visibility = View.VISIBLE
         binding.tvAddMedia.visibility = View.VISIBLE
+
+        for (i in 0 until listGallery.size) {
+            listGallery.get(i).isShowDeleteImage = true
+        }
+        profileAdapter.notifyDataSetChanged()
+        binding.imgDelete.visibility = View.VISIBLE
     }
 
     private fun showImgEdit() {
         binding.imgEdit.visibility = View.VISIBLE
         binding.tvDone.visibility = View.GONE
         binding.tvAddMedia.visibility = View.GONE
+        binding.imgDelete.visibility = View.GONE
     }
 
     private fun init() {
@@ -262,13 +342,18 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             layoutManager = LinearLayoutManager(activity)
             profileAdapter = WorkListAdapter(requireActivity())
             { position: Int ->
-                if (listGallery[position].isImage)
-                    totalGalleryImages--
-                else
-                    totalGalleryVideos--
-                listGallery.removeAt(position)
+                isImageDelete = listGallery[position].isImage
+                deleteMediaPos=position
+                if (listGallery[position].isLocal) {
+                    listGallery.removeAt(position)
+                } else {
+                    viewModel.deleteMedia(
+                        BuildConfig.BASE_URL + ApiConstant.DELETE_MEDIA + "/" + preferences.getString(
+                            AppConstants.USER_ID
+                        )
+                    )
+                }
                 profileAdapter.notifyDataSetChanged()
-
                 if (listGallery.size > 0) {
                     showGalleryView(true)
                 } else {
@@ -311,6 +396,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 request.path = images[i].path
                 request.isImage = true
                 request.isShowDeleteImage = true
+                request.isLocal = true
                 listGallery.add(0, request)
                 profileAdapter.notifyDataSetChanged()
                 showGalleryView(true)
@@ -327,10 +413,12 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                     if (isIntroVideo) {
                         Glide.with(this).load(path)
                             .into(binding.imgIntroVideo)
+                        introVideoPath = path
                     } else {
                         request.path = path
                         request.isImage = false
                         request.isShowDeleteImage = true
+                        request.isLocal = true
                         listGallery.add(0, request)
                         profileAdapter.notifyDataSetChanged()
                         totalGalleryVideos++
@@ -358,7 +446,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 if (it.value)
                     permission++
             }
-            if (permission == 2)
+            if (permission == 3)
                 showIntroVideoDialog()
         }
 
@@ -373,4 +461,35 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             if (permission == 2)
                 showMedia()
         }
+
+    private fun requestProfileUpdate(
+    ): HashMap<String, RequestBody> {
+        val map = HashMap<String, RequestBody>()
+        map[resources.getString(R.string.str_name_label)] =
+            toRequestBody(etxName.text.toString())
+        map[resources.getString(R.string.str_year_label)] =
+            toRequestBody(etxYear.text.toString())
+        map[resources.getString(R.string.str_age_label)] =
+            toRequestBody(etxAge.text.toString())
+        map[resources.getString(R.string.str_heightFt_label)] =
+            toRequestBody(etxHeightFt.text.toString())
+        map[resources.getString(R.string.str_heightIn_label)] =
+            toRequestBody(etxHeightIn.text.toString())
+        map[resources.getString(R.string.str_bodytype_label)] =
+            toRequestBody(etxBodyType.text.toString())
+        map[resources.getString(R.string.str_skintone_label)] =
+            toRequestBody(etxSkinTone.text.toString())
+        map[resources.getString(R.string.str_language_label)] =
+            toRequestBody(etxLanguage.text.toString())
+        map[resources.getString(R.string.str_bio)] =
+            toRequestBody(etxBio.text.toString())
+        map[resources.getString(R.string.str_artistId_label)] =
+            toRequestBody(preferences.getString(AppConstants.USER_ID))
+        return map
+    }
+
+    private fun toRequestBody(value: String): RequestBody {
+        return value.toRequestBody("text/plain".toMediaTypeOrNull())
+    }
+
 }

@@ -31,6 +31,8 @@
     <string name="folder">Folder</string>
     <string name="str_username">name</string>
     <string name="str_useremail">email</string>
+    <string name="str_gender">gender</string>
+
     <string name="err_user_name">Please enter user name</string>
     <string name="err_email">Please enter email</string>
     <string name="err_password">Please enter password</string>
@@ -92,6 +94,18 @@
     <!-- Profile Fragment -->
     <string name="str_profile">Profile Fragment</string>
     <string name="str_profile_heading">Profile</string>
+    <string name="str_img">Image</string>
+    <string name="str_year_label">year</string>
+    <string name="str_name_label">name</string>
+    <string name="str_age_label">age</string>
+    <string name="str_heightFt_label">heightFt</string>
+    <string name="str_heightIn_label">heightIn</string>
+    <string name="str_bodytype_label">bodyType</string>
+    <string name="str_skintone_label">skinTone</string>
+    <string name="str_language_label">language</string>
+    <string name="str_bio_label">bio</string>
+    <string name="str_artistId_label">artistId</string>
+
 
     <!-- other user profile Fragment -->
     <string name="str_other_user_profile">Other User Profile Fragment</string>
@@ -125,6 +139,9 @@
     <string name="str_female">Female</string>
     <string name="str_age_range">Age Range :\u0020</string>
     <string name="str_height_ft">Height(Ft)</string>
+    <string name="str_height_ft_enter">Enter Height(Ft)</string>
+    <string name="str_height_In_enter">Enter Height(IN)</string>
+
     <string name="str_height_In">Height(In)</string>
     <string name="str_experiance">Experiance</string>
     <string name="str_language">Language</string>
@@ -160,9 +177,16 @@
 
     <string name="str_user_name_hint">User Name</string>
     <string name="str_age_hint">Age</string>
+    <string name="str_age_enter">Enter Age</string>
     <string name="str_body_type">Body Type</string>
+
+    <string name="str_body_type_enter">Enter Body Type</string>
+
     <string name="str_skin_tone">Skin Tone</string>
+    <string name="str_skin_tone_enter">Enter Skin Tone</string>
+
     <string name="str_language_hint">Language</string>
+    <string name="str_language_enter">Enter Language</string>
 
     <string name="str_casting_agency">Casting Agency</string>
     <string name="str_year">00</string>
@@ -193,4 +217,5 @@
     <string name="str_casting">Audition Street</string>
     <string name="str_yes">Yes</string>
     <string name="str_no">No</string>
+    <string name="delete_dialog">Are you sure you want to delete ? </string>
 </resources>

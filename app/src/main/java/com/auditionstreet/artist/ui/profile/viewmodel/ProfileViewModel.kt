@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.auditionstreet.artist.api.ApiConstant
+import com.auditionstreet.artist.model.response.DeleteMediaResponse
 import com.auditionstreet.artist.model.response.ProfileResponse
 import com.auditionstreet.artist.model.response.UploadMediaResponse
 import com.auditionstreet.artist.ui.profile.repository.ProfileRepository
@@ -18,6 +19,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.HashMap
 
 class ProfileViewModel @ViewModelInject constructor(
     private val profileRepository: ProfileRepository,
@@ -28,6 +30,10 @@ class ProfileViewModel @ViewModelInject constructor(
     private val profile = MutableLiveData<Event<Resource<ProfileResponse>>>()
     val getProfile: LiveData<Event<Resource<ProfileResponse>>>
         get() = profile
+
+    private val delete = MutableLiveData<Event<Resource<DeleteMediaResponse>>>()
+    val deleteMedia: LiveData<Event<Resource<DeleteMediaResponse>>>
+        get() = delete
 
     private val upload_media = MutableLiveData<Event<Resource<UploadMediaResponse>>>()
     val uploadMedia: LiveData<Event<Resource<UploadMediaResponse>>>
@@ -65,28 +71,106 @@ class ProfileViewModel @ViewModelInject constructor(
         }
     }
 
-    fun uploadMedia(list: ArrayList<WorkGalleryRequest>) {
+    fun deleteMedia(url: String) {
+        viewModelScope.launch {
+            delete.postValue(Event(Resource.loading(ApiConstant.DELETE_MEDIA, null)))
+            if (networkHelper.isNetworkConnected()) {
+                profileRepository.deleteMedia(url).let {
+                    if (it.isSuccessful && it.body() != null) {
+                        delete.postValue(
+                            Event(
+                                Resource.success(
+                                    ApiConstant.DELETE_MEDIA,
+                                    it.body()
+                                )
+                            )
+                        )
+                    } else {
+                        delete.postValue(
+                            Event(
+                                Resource.error(
+                                    ApiConstant.DELETE_MEDIA,
+                                    it.code(),
+                                    it.errorBody().toString(),
+                                    null
+                                )
+                            )
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+
+    fun uploadMedia(
+        list: ArrayList<WorkGalleryRequest>,
+        profileImageFile: File?,
+        selectedProfileImage: String,
+        introVideoPath: String,
+        requestProfileUpdate: HashMap<String, RequestBody>
+    ) {
         viewModelScope.launch {
             upload_media.postValue(Event(Resource.loading(ApiConstant.UPLOAD_MEDIA, null)))
-            var photo: MultipartBody.Part? = null
+            var profileImageUpload: MultipartBody.Part? = null
+            var introVideoUpload: MultipartBody.Part? = null
+            var imageOrVideoUpload: MultipartBody.Part
+
             val mediaList = ArrayList<MultipartBody.Part>()
             if (networkHelper.isNetworkConnected()) {
-                for (i in 0..list.size - 1) {
+                if (!introVideoPath.isEmpty()) {
+                    val introVideo = File(introVideoPath)
+                    val fileIntroVideo =
+                        RequestBody.create(
+                            IMAGE_EXTENSION.toMediaTypeOrNull(),
+                            introVideo!!
+                        )
+                    introVideoUpload =
+                        MultipartBody.Part.createFormData(
+                            "video",
+                            "IntroVideo",
+                            fileIntroVideo
+                        )
+                }
+                if (!selectedProfileImage.isEmpty()) {
+                    val profileImage =
+                        RequestBody.create(
+                            IMAGE_EXTENSION.toMediaTypeOrNull(),
+                            profileImageFile!!
+                        )
+                    profileImageUpload =
+                        MultipartBody.Part.createFormData(
+                            "image",
+                            selectedProfileImage,
+                            profileImage
+                        )
+                }
+
+                for (i in 0 until list.size) {
                     val videoOrImage = File(list.get(i).path)
                     val profileImage =
                         RequestBody.create(
                             IMAGE_EXTENSION.toMediaTypeOrNull(),
                             videoOrImage!!
                         )
-                    photo =
-                        MultipartBody.Part.createFormData(
-                            "media",
-                            "sd",
-                            profileImage
-                        )
-                    mediaList.add(photo)
+                    if (list.get(i).isImage) {
+                        imageOrVideoUpload =
+                            MultipartBody.Part.createFormData(
+                                "media[]",
+                                "Image",
+                                profileImage
+                            )
+                    } else {
+                        imageOrVideoUpload =
+                            MultipartBody.Part.createFormData(
+                                "media[]",
+                                "Video",
+                                profileImage
+                            )
+                    }
+                    mediaList.add(imageOrVideoUpload)
                 }
-                profileRepository.uploadMedia(mediaList).let {
+                profileRepository.uploadMedia(requestProfileUpdate,mediaList,profileImageUpload,introVideoUpload).let {
                     if (it.isSuccessful && it.body() != null) {
                         upload_media.postValue(
                             (Event(

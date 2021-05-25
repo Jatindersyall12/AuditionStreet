@@ -185,7 +185,12 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 toRequestBody(binding.etxPassword.text.toString().trim())
             map[resources.getString(R.string.str_mobile)] =
                 toRequestBody(binding.etxPhoneNumber.text.toString().trim())
-
+            if (binding.chkMale.isChecked)
+                map[resources.getString(R.string.str_gender)] =
+                    toRequestBody(resources.getString(R.string.str_male))
+            else
+                map[resources.getString(R.string.str_gender)] =
+                    toRequestBody(resources.getString(R.string.str_female))
         } else {
             map[resources.getString(R.string.str_username)] =
                 toRequestBody(userName)
@@ -195,6 +200,9 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                 toRequestBody("")
             map[resources.getString(R.string.str_mobile)] =
                 toRequestBody("")
+            map[resources.getString(R.string.str_gender)] =
+                toRequestBody("")
+
 
             selectedImage = ""
         }

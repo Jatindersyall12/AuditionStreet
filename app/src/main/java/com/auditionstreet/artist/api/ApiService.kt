@@ -34,10 +34,16 @@ interface ApiService {
     @GET
     suspend fun getProfile(@Url url: String): Response<ProfileResponse>
 
+    @GET
+    suspend fun deleteMedia(@Url url: String): Response<DeleteMediaResponse>
+
     @Multipart
     @POST(UPLOAD_MEDIA)
     suspend fun uploadMedia(
-        @Part photo: List<MultipartBody.Part?>
+        @PartMap requestProfileUpdate: HashMap<String, RequestBody>,
+        @Part photo: List<MultipartBody.Part?>,
+        @Part profileImageFile: MultipartBody.Part?,
+        @Part introVideoUpload: MultipartBody.Part?
     ): Response<UploadMediaResponse>
 
     @GET

@@ -39,9 +39,10 @@ class ApiConstant {
         const val GET_ALL_USER = "getAllUser"
         const val ADD_PROJECT = "projectCreate"
         const val SIGN_UP = "artistSignup"
-        const val GET_PROFILE = "profile"
+        const val GET_PROFILE = "artistDetail"
+        const val DELETE_MEDIA = "deleteMedia"
         const val ADD_GROUP = "groupCreate"
-        const val UPLOAD_MEDIA = "imageUploadPost"
+        const val UPLOAD_MEDIA = "updateArtistProfile"
 
     }
 }
