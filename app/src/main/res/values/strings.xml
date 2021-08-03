@@ -85,6 +85,13 @@
     <!-- ShortList Fragment -->
     <string name="str_shortlist_frag">ShortList Fragment</string>
 
+    <!-- All Application Fragment -->
+    <string name="str_all_application">All Application Fragment</string>
+    <string name="str_select_project">Select Project</string>
+    <string name="str_shortlst">Shortlist</string>
+    <string name="str_block">Block</string>
+    <string name="str_select_projects">Select Projects</string>
+
 
     <!-- Facebook -->
 
@@ -126,6 +133,7 @@
     <string name="str_languages">Languages:</string>
     <string name="str_dates">Shooting Dates:</string>
     <string name="str_location">Location:</string>
+    <string name="gender_project_detail">Gender:</string>
     <string name="str_description">Description:</string>
     <string name="str_to">\u0020to\u0020</string>
     <string name="str_empty">- -</string>

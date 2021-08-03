@@ -1,5 +1,6 @@
 package com.silo.api
 
+import com.auditionstreet.artist.api.ApiConstant.Companion.ACCEPT_REJECT_PROJECT
 import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_GROUP
 import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_PROJECT
 import com.auditionstreet.artist.api.ApiConstant.Companion.GET_PROJECTS
@@ -7,10 +8,7 @@ import com.auditionstreet.artist.api.ApiConstant.Companion.LOGIN
 import com.auditionstreet.artist.api.ApiConstant.Companion.SIGN_UP
 import com.auditionstreet.artist.api.ApiConstant.Companion.UPLOAD_MEDIA
 import com.auditionstreet.artist.model.response.*
-import com.silo.model.request.AddGroupRequest
-import com.silo.model.request.AddProjectRequest
-import com.silo.model.request.LoginRequest
-import com.silo.model.request.ProjectRequest
+import com.silo.model.request.*
 import com.silo.model.response.LoginResponse
 import com.silo.model.response.SignUpResponse
 import okhttp3.MultipartBody
@@ -69,5 +67,9 @@ interface ApiService {
         @PartMap params: HashMap<String, RequestBody>,
         @Part photo: MultipartBody.Part?
     ): Response<SignUpResponse>
+
+    @POST(ACCEPT_REJECT_PROJECT)
+    suspend fun acceptRejectProject(@Body acceptRejectProjectRequest: AcceptRejectProjectRequest): Response<AddGroupResponse>
+
 
 }

@@ -33,16 +33,17 @@ class ApiConstant {
         const val LOGIN = "artistLogin"
 
         const val GET_PROJECTS = ""
-        const val GET_MY_PROJECTS = "projectList"
+        const val GET_MY_PROJECTS = "artist/projectList"
         const val GET_MY_PROJECTS_DETAILS = "projectDetail"
         const val GET_ALL_ADMINS = "groupMemberList"
         const val GET_ALL_USER = "getAllUser"
         const val ADD_PROJECT = "projectCreate"
         const val SIGN_UP = "artistSignup"
         const val GET_PROFILE = "artistDetail"
-        const val DELETE_MEDIA = "deleteMedia"
+        const val DELETE_MEDIA = "common/deleteMedia"
         const val ADD_GROUP = "groupCreate"
         const val UPLOAD_MEDIA = "updateArtistProfile"
+        const val ACCEPT_REJECT_PROJECT = "common/acceptReject"
 
     }
 }

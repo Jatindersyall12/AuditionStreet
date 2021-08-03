@@ -10,6 +10,7 @@ import com.auditionstreet.artist.R
 import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentHomeBinding
 import com.auditionstreet.artist.model.response.ProjectResponse
+import com.auditionstreet.artist.ui.home.activity.AllApplicationActivity
 import com.auditionstreet.artist.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.artist.ui.home.activity.ShortlistedActivity
 import com.auditionstreet.artist.ui.home.adapter.ApplicationListAdapter
@@ -179,7 +180,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                 // requireActivity().finish()
             }
             R.id.tvViewAllApplication -> {
-                val i = Intent(requireActivity(), ShortlistedActivity::class.java)
+                val i = Intent(requireActivity(), AllApplicationActivity::class.java)
                 // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)
                 //  requireActivity().finish()

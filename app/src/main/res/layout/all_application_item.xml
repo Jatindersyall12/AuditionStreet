@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_18sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvCriteria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:text="@string/str_criteria"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18ssp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:text="@string/str_age"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCriteria" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvAgeDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toRightOf="@+id/tvAge"
+                app:layout_constraintTop_toBottomOf="@+id/tvCriteria" />
+
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvtvHeightDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/str_height"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAge" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvHeightDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toRightOf="@+id/tvtvHeightDetail"
+                app:layout_constraintTop_toBottomOf="@+id/tvAge" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/str_languages"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvtvHeightDetail" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvLanguageDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toRightOf="@+id/tvLanguage"
+                app:layout_constraintTop_toBottomOf="@+id/tvtvHeightDetail" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvtvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/gender_project_detail"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLanguage" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toRightOf="@+id/tvtvGender"
+                app:layout_constraintTop_toBottomOf="@+id/tvLanguage" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvDates"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:text="@string/str_dates"
+                android:textColor="@color/gray"
+                android:visibility="gone"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvtvGender" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvDatesDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvtvGender" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvtvLocationDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:text="@string/str_location"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDatesDetail" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvLocationDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvtvLocationDetail" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:text="@string/str_description"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLocationDetail" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvDescDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_20sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDesc" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
