@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.artist.R
+import com.auditionstreet.artist.model.response.HomeApiResponse
 import com.auditionstreet.artist.model.response.ProjectResponse
 import com.auditionstreet.artist.utils.showToast
 import kotlinx.android.synthetic.main.project_item.view.*
@@ -22,19 +23,19 @@ class ProjectListAdapter(
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProjectResponse.Data>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HomeApiResponse.Data.PendingRequest>() {
 
         override fun areItemsTheSame(
-            oldItem: ProjectResponse.Data,
-            newItem: ProjectResponse.Data
+            oldItem: HomeApiResponse.Data.PendingRequest,
+            newItem: HomeApiResponse.Data.PendingRequest
         ): Boolean {
             return oldItem == newItem
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: ProjectResponse.Data,
-            newItem: ProjectResponse.Data
+            oldItem: HomeApiResponse.Data.PendingRequest,
+            newItem: HomeApiResponse.Data.PendingRequest
         ): Boolean {
             return oldItem == newItem
         }
@@ -61,16 +62,19 @@ class ProjectListAdapter(
                 holder.itemView.btnViewDetail.setOnClickListener{
                     showToast(mContext,mContext.resources.getString(R.string.str_coming_soon))
                 }
+                holder.itemView.tvActor.text = differ.currentList[position].title
+                holder.itemView.tvAgeRange.text = "Age:"+differ.currentList[position].age
+                holder.itemView.new_Height.text = differ.currentList[position].heightFt+"."+
+                        differ.currentList[position].heightIn+" ft min."
             }
         }
     }
 
     override fun getItemCount(): Int {
-        //return differ.currentList.size
-        return 6
+        return differ.currentList.size
     }
 
-    fun submitList(projectResponse: List<ProjectResponse.Data>) {
+    fun submitList(projectResponse: List<HomeApiResponse.Data.PendingRequest>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }
@@ -80,7 +84,7 @@ class ProjectListAdapter(
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: ProjectResponse.Data) = with(itemView) {
+        fun bind(item: HomeApiResponse.Data.PendingRequest) = with(itemView) {
             val rnd = Random()
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             itemView.btnViewDetail.background.setTint(color)

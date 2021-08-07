@@ -71,5 +71,6 @@ interface ApiService {
     @POST(ACCEPT_REJECT_PROJECT)
     suspend fun acceptRejectProject(@Body acceptRejectProjectRequest: AcceptRejectProjectRequest): Response<AddGroupResponse>
 
-
+    @GET
+    suspend fun getHomeData(@Url url: String): Response<HomeApiResponse>
 }

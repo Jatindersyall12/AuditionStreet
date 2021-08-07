@@ -6,17 +6,22 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.auditionstreet.artist.BuildConfig
 import com.auditionstreet.artist.R
 import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentHomeBinding
+import com.auditionstreet.artist.model.response.HomeApiResponse
 import com.auditionstreet.artist.model.response.ProjectResponse
+import com.auditionstreet.artist.storage.preference.Preferences
 import com.auditionstreet.artist.ui.home.activity.AllApplicationActivity
 import com.auditionstreet.artist.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.artist.ui.home.activity.ShortlistedActivity
 import com.auditionstreet.artist.ui.home.adapter.ApplicationListAdapter
 import com.auditionstreet.artist.ui.home.adapter.HomeShortListAdapter
 import com.auditionstreet.artist.ui.home.adapter.ProjectListAdapter
+import com.auditionstreet.artist.ui.home.viewmodel.HomeViewModel
 import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
+import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
@@ -25,6 +30,7 @@ import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.my_project_item.view.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListener {
@@ -32,14 +38,30 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
     private lateinit var projectListAdapter: ProjectListAdapter
     private lateinit var applicationListAdapter: ApplicationListAdapter
     private lateinit var shortListAdapter: HomeShortListAdapter
+    private var pendingProjectList = ArrayList<HomeApiResponse.Data.PendingRequest>()
+    private var projectList = ArrayList<HomeApiResponse.Data.Project>()
+    private var acceptedList = ArrayList<HomeApiResponse.Data.Accept>()
 
     private val viewModel: ProjectViewModel by viewModels()
+    private val viewModelHome: HomeViewModel by viewModels()
+
+    @Inject
+    lateinit var preferences: Preferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         setObservers()
         init()
+        getHomeScreenData()
+    }
+
+    private fun getHomeScreenData(){
+        viewModelHome.getHomeScreenData(
+            BuildConfig.BASE_URL + ApiConstant.GET_HOME_DATA + preferences.getString(
+                AppConstants.USER_ID
+            )
+        )
     }
 
     private fun setListeners() {
@@ -52,6 +74,9 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         viewModel.users.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+        viewModelHome.getHomeScreenData.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
     }
 
     private fun handleApiCallback(apiResponse: Resource<Any>) {
@@ -59,11 +84,20 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             Status.SUCCESS -> {
                 hideProgress()
                 when (apiResponse.apiConstant) {
-                    ApiConstant.GET_PROJECTS -> {
+                    /*ApiConstant.GET_PROJECTS -> {
                         setAdapter(apiResponse.data as ProjectResponse)
                         setApplicationAdapter(apiResponse.data)
                         setShortListAdapter(apiResponse.data)
 
+                    }*/
+                    ApiConstant.GET_HOME_DATA ->{
+                        val homeScreenDetailResponse = apiResponse.data as HomeApiResponse
+                        pendingProjectList = homeScreenDetailResponse.data.pendingRequest as ArrayList<HomeApiResponse.Data.PendingRequest>
+                        projectList = homeScreenDetailResponse.data.projectList as ArrayList<HomeApiResponse.Data.Project>
+                        acceptedList = homeScreenDetailResponse.data.acceptList as ArrayList<HomeApiResponse.Data.Accept>
+                        setAdapter(homeScreenDetailResponse)
+                        setApplicationAdapter(homeScreenDetailResponse)
+                        setShortListAdapter(homeScreenDetailResponse)
                     }
                 }
             }
@@ -136,9 +170,9 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         }
     }
 
-    private fun setAdapter(projectResponse: ProjectResponse) {
-        if (projectResponse.data.size > 0) {
-            projectListAdapter.submitList(projectResponse.data)
+    private fun setAdapter(homeApiResponse: HomeApiResponse) {
+        if (homeApiResponse.data.pendingRequest.size > 0) {
+            projectListAdapter.submitList(homeApiResponse.data.pendingRequest)
             binding.rvSlidingProject.visibility = View.VISIBLE
             //binding.tvNoRecordFound.visibility = View.GONE
         } else {
@@ -147,9 +181,9 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         }
     }
 
-    private fun setApplicationAdapter(projectResponse: ProjectResponse) {
-        if (projectResponse.data.size > 0) {
-            applicationListAdapter.submitList(projectResponse.data)
+    private fun setApplicationAdapter(homeApiResponse: HomeApiResponse) {
+        if (homeApiResponse.data.projectList.size > 0) {
+            applicationListAdapter.submitList(homeApiResponse.data.projectList)
             binding.rvApplication.visibility = View.VISIBLE
             //binding.tvNoRecordFound.visibility = View.GONE
         } else {
@@ -159,9 +193,9 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
 
     }
 
-    private fun setShortListAdapter(projectResponse: ProjectResponse) {
-        if (projectResponse.data.size > 0) {
-            shortListAdapter.submitList(projectResponse.data)
+    private fun setShortListAdapter(homeApiResponse: HomeApiResponse) {
+        if (homeApiResponse.data.acceptList.size > 0) {
+            shortListAdapter.submitList(homeApiResponse.data.acceptList)
             binding.rvShortlist.visibility = View.VISIBLE
             //binding.tvNoRecordFound.visibility = View.GONE
         } else {

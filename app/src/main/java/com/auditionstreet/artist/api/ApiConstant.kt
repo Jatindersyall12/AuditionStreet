@@ -44,6 +44,7 @@ class ApiConstant {
         const val ADD_GROUP = "groupCreate"
         const val UPLOAD_MEDIA = "updateArtistProfile"
         const val ACCEPT_REJECT_PROJECT = "common/acceptReject"
+        const val GET_HOME_DATA = "artist/homeAPI/"
 
     }
 }

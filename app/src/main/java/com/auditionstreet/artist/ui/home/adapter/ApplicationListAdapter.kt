@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.artist.R
+import com.auditionstreet.artist.model.response.HomeApiResponse
 import com.auditionstreet.artist.model.response.ProjectResponse
 import kotlinx.android.synthetic.main.application_item.view.*
 import kotlinx.android.synthetic.main.project_item.view.*
@@ -23,19 +24,19 @@ class ApplicationListAdapter(
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ProjectResponse.Data>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HomeApiResponse.Data.Project>() {
 
         override fun areItemsTheSame(
-            oldItem: ProjectResponse.Data,
-            newItem: ProjectResponse.Data
+            oldItem: HomeApiResponse.Data.Project,
+            newItem: HomeApiResponse.Data.Project
         ): Boolean {
             return oldItem == newItem
         }
 
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(
-            oldItem: ProjectResponse.Data,
-            newItem: ProjectResponse.Data
+            oldItem: HomeApiResponse.Data.Project,
+            newItem: HomeApiResponse.Data.Project
         ): Boolean {
             return oldItem == newItem
         }
@@ -62,16 +63,22 @@ class ApplicationListAdapter(
                     mCallback.invoke(position)
                 }
                // holder.bind(differ.currentList[position])
+                holder.itemView.tvName.text = differ.currentList[position].title
+                holder.itemView.tvActress.text = "Coming Soon"
+                holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
+                holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
+                        "."+differ.currentList[position].heightIn+"ft"
+                /*Glide.with(mContext).load(differ.currentList[position].a)
+                    .into(holder.itemView.imgRound)*/
             }
         }
     }
 
     override fun getItemCount(): Int {
-        //return differ.currentList.size
-        return 6
+        return differ.currentList.size
     }
 
-    fun submitList(projectResponse: List<ProjectResponse.Data>) {
+    fun submitList(projectResponse: List<HomeApiResponse.Data.Project>) {
         differ.submitList(projectResponse)
         notifyDataSetChanged()
     }
@@ -81,7 +88,7 @@ class ApplicationListAdapter(
         val mContext: Context
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: ProjectResponse.Data) = with(itemView) {
+        fun bind(item: HomeApiResponse.Data.Project) = with(itemView) {
             Log.e("sd1","Dg")
 
             val rnd = Random()
