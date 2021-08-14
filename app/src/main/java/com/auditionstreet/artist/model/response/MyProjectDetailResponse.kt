@@ -75,7 +75,11 @@ data class MyProjectDetailResponse(
             @SerializedName("toDate")
             val toDate: String,
             @SerializedName("updated_at")
-            val updatedAt: String
+            val updatedAt: String,
+            @SerializedName("heightFt")
+            val heightFt: String,
+            @SerializedName("heightIn")
+            val heightIn: String
         )
     }
 }

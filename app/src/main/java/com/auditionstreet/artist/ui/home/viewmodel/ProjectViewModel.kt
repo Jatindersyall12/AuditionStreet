@@ -15,6 +15,7 @@ import com.leo.wikireviews.utils.livedata.Event
 import com.silo.model.request.AcceptRejectProjectRequest
 import com.silo.model.request.LoginRequest
 import com.silo.model.request.ProjectRequest
+import com.silo.model.request.ReportCastingRequest
 import com.silo.utils.network.NetworkHelper
 import com.silo.utils.network.Resource
 import kotlinx.coroutines.launch
@@ -37,6 +38,10 @@ class ProjectViewModel @ViewModelInject constructor(
     private val all_applications = MutableLiveData<Event<Resource<MyProjectResponse>>>()
     val allAppliactions: LiveData<Event<Resource<MyProjectResponse>>>
         get() = all_applications
+
+    private val _report_casting = MutableLiveData<Event<Resource<AddGroupResponse>>>()
+    val reportCasting: LiveData<Event<Resource<AddGroupResponse>>>
+        get() = _report_casting
 
     private fun getProject(projectRequest: ProjectRequest) {
         viewModelScope.launch {
@@ -152,6 +157,69 @@ class ProjectViewModel @ViewModelInject constructor(
                     Event(
                         Resource.error(
                             ApiConstant.ACCEPT_REJECT_PROJECT,
+                            ApiConstant.STATUS_500,
+                            "",
+                            null
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+
+    fun reportCasting(reportCastingRequest: ReportCastingRequest) {
+        viewModelScope.launch {
+            try {
+                withTimeout(ApiConstant.API_TIMEOUT) {
+                    _report_casting.postValue(
+                        Event(
+                            Resource.loading(
+                                ApiConstant.REPORT_CASTING,
+                                null
+                            )
+                        )
+                    )
+                    if (networkHelper.isNetworkConnected()) {
+                        projectRepository.reportCasting(reportCastingRequest).let {
+                            if (it.isSuccessful && it.body() != null) {
+                                _report_casting.postValue(
+                                    Event(
+                                        Resource.success(
+                                            ApiConstant.REPORT_CASTING,
+                                            it.body()
+                                        )
+                                    )
+                                )
+                            } else {
+                                _report_casting.postValue(
+                                    Event(
+                                        Resource.error(
+                                            ApiConstant.REPORT_CASTING,
+                                            it.code(),
+                                            it.errorBody().toString(),
+                                            null
+                                        )
+                                    )
+                                )
+                            }
+                        }
+                    } else {
+                        _report_casting.postValue(
+                            Event(
+                                Resource.requiredResource(
+                                    ApiConstant.REPORT_CASTING,
+                                    R.string.err_no_network_available
+                                )
+                            )
+                        )
+                    }
+                }
+            }catch (e: Exception) {
+                _report_casting.postValue(
+                    Event(
+                        Resource.error(
+                            ApiConstant.REPORT_CASTING,
                             ApiConstant.STATUS_500,
                             "",
                             null

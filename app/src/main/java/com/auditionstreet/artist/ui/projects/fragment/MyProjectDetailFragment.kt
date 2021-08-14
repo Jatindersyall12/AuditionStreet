@@ -87,10 +87,11 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
     private fun setDetail(myProjectResponse: MyProjectDetailResponse) {
         binding.tvTitle.text = myProjectResponse.data[0].projectDetails.title
         binding.tvAgeDetail.text = myProjectResponse.data[0].projectDetails.age
-        if (myProjectResponse.data[0].projectDetails.height.isEmpty())
+        if (myProjectResponse.data[0].projectDetails.heightFt.isEmpty())
             binding.tvHeightDetail.text = resources.getString(R.string.str_empty)
         else
-            binding.tvHeightDetail.text = myProjectResponse.data[0].projectDetails.height
+            binding.tvHeightDetail.text = myProjectResponse.data[0].projectDetails.heightFt+"."+
+                    myProjectResponse.data[0].projectDetails.heightIn
         if (myProjectResponse.data[0].projectDetails.lang.isEmpty())
             binding.tvLanguageDetail.text = resources.getString(R.string.str_empty)
         else

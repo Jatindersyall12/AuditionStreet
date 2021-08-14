@@ -60,12 +60,12 @@ class ProjectListAdapter(
             is ConnectionHolder -> {
 //                holder.bind(differ.currentList[position])
                 holder.itemView.btnViewDetail.setOnClickListener{
-                    showToast(mContext,mContext.resources.getString(R.string.str_coming_soon))
+                   mCallback.invoke(position)
                 }
                 holder.itemView.tvActor.text = differ.currentList[position].title
-                holder.itemView.tvAgeRange.text = "Age:"+differ.currentList[position].age
-                holder.itemView.new_Height.text = differ.currentList[position].heightFt+"."+
-                        differ.currentList[position].heightIn+" ft min."
+                holder.itemView.tvAgeRange.text = "Age:"+differ.currentList[position].projectAge
+                holder.itemView.new_Height.text = differ.currentList[position].projectheightFt+"."+
+                        differ.currentList[position].projectheightIn+" ft min."
             }
         }
     }

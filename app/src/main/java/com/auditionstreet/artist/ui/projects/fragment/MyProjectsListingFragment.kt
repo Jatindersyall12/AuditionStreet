@@ -36,37 +36,17 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListeners()
         setObservers()
         init()
-        setRecyclerViewListener()
-    }
-
-    private fun setRecyclerViewListener() {
-        binding.rvProjects.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    binding.layAdd.visibility = View.GONE
-                } else if (dy < 0) {
-                    binding.layAdd.visibility = View.VISIBLE
-                }
-            }
-        })
     }
 
     private fun getMyProjects() {
-        /* preferences.getString(
-             AppConstants.USER_ID)*/
+
         viewModel.getMyProject(
             BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS + "/" + preferences.getString(
                 AppConstants.USER_ID
             )
         )
-    }
-
-    private fun setListeners() {
-        binding.btnAddProject.setOnClickListener(this)
-        binding.layAdd.setOnClickListener(this)
     }
 
 
@@ -120,23 +100,16 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
             myProjectListAdapter.submitList(projectResponse.data)
             binding.rvProjects.visibility = View.VISIBLE
             binding.layNoRecord.visibility = View.GONE
-            binding.layAdd.visibility=View.VISIBLE
+
         } else {
-            binding.layAdd.visibility=View.GONE
+
             binding.rvProjects.visibility = View.GONE
             binding.layNoRecord.visibility = View.VISIBLE
         }
     }
 
     override fun onClick(v: View?) {
-        when (v) {
-            binding.btnAddProject -> {
-                sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
-            }
-            binding.layAdd -> {
-                sharedViewModel.setDirection(MyProjectsListingFragmentDirections.navigateToAddProject())
-            }
-        }
+
     }
 
     override fun onResume() {

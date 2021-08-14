@@ -81,7 +81,15 @@ data class HomeApiResponse(
             @SerializedName("age")
             val age: String,
             @SerializedName("video")
-            val video: String
+            val video: String,
+            @SerializedName("projectAge")
+            val projectAge: String,
+            @SerializedName("projectheightFt")
+            val projectheightFt: String,
+            @SerializedName("projectheightIn")
+            val projectheightIn: String,
+            @SerializedName("projectgender")
+            val projectgender: String
         )
 
         data class PendingRequest(
@@ -112,7 +120,15 @@ data class HomeApiResponse(
             @SerializedName("age")
             val age: String,
             @SerializedName("video")
-            val video: String
+            val video: String,
+            @SerializedName("projectAge")
+            val projectAge: String,
+            @SerializedName("projectheightFt")
+            val projectheightFt: String,
+            @SerializedName("projectheightIn")
+            val projectheightIn: String,
+            @SerializedName("projectgender")
+            val projectgender: String
         )
     }
 }

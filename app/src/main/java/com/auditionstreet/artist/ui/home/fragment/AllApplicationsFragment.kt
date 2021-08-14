@@ -1,5 +1,6 @@
 package com.auditionstreet.artist.ui.home.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,12 +13,14 @@ import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentAllApplicationsBinding
 import com.auditionstreet.artist.model.response.MyProjectResponse
 import com.auditionstreet.artist.storage.preference.Preferences
+import com.auditionstreet.artist.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.artist.ui.home.adapter.AllApplicationsAdapter
 import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.AcceptRejectProjectRequest
+import com.silo.model.request.ReportCastingRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -35,12 +38,14 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
     private val viewModel: ProjectViewModel by viewModels()
     private lateinit var projectList: MyProjectResponse;
     private var cardPosition = 0
+    private var applicationId = ""
 
     @Inject
     lateinit var preferences: Preferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        applicationId = AppConstants.APPLICATIONID
         setListeners()
         setObservers()
         init()
@@ -63,6 +68,12 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
         viewModel.allAppliactions.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+        viewModel.acceptRejectProject.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModel.reportCasting.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
 
     }
 
@@ -74,6 +85,28 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
                     ApiConstant.GET_MY_PROJECTS -> {
                         projectList = apiResponse.data as MyProjectResponse
                         setAdapter(apiResponse.data as MyProjectResponse)
+                        if (!applicationId.isEmpty()){
+                            var tempApplicationList = ArrayList<MyProjectResponse.Data>()
+                            for (i in 0 until projectList.data.size){
+                                if (projectList.data[i].id == applicationId.toInt()){
+                                    tempApplicationList.add(projectList.data[i])
+                                }
+                            }
+                            allApplicationsAdapter.submitList(tempApplicationList)
+                        }
+                    }
+                    ApiConstant.ACCEPT_REJECT_PROJECT -> {
+                        projectList.data.removeAt(0)
+                        allApplicationsAdapter.submitList(projectList.data)
+                        manageCardAndTextViewVisibility()
+                    }
+                    ApiConstant.REPORT_CASTING -> {
+                        val acceptRejectProjectRequest = AcceptRejectProjectRequest()
+                        acceptRejectProjectRequest.id = projectList.data[cardPosition].id.toString()
+                        acceptRejectProjectRequest.status = "2"
+                        acceptRejectProjectRequest.userStatus = "1"
+                        acceptRejectProjectRequest.artistId = preferences.getString(AppConstants.USER_ID)
+                        viewModel.acceptRejectProject(acceptRejectProjectRequest)
                     }
                 }
             }
@@ -98,11 +131,17 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
         binding.cardAllApplications.apply {
             allApplicationsAdapter = AllApplicationsAdapter(requireActivity())
             { position: Int ->
-                projectList.data!!.removeAt(0)
-                //if (position == 0)
-                allApplicationsAdapter.submitList(projectList.data)
-                // else
-                //   binding.cardAllApplications.rewind()
+                if (position == 0){
+                    AppConstants.CASTINGID = projectList.data[cardPosition].castingId.toString()
+                    val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                    startActivity(i)
+                }else if(position == 1){
+                    val reportCastingRequest = ReportCastingRequest()
+                    reportCastingRequest.artistId = preferences.getString(AppConstants.USER_ID)
+                    reportCastingRequest.castingId = projectList.data[cardPosition].castingId.toString()
+                    reportCastingRequest.message = "test"
+                    viewModel.reportCasting(reportCastingRequest)
+                }
             }
             adapter = allApplicationsAdapter
             manager.setStackFrom(StackFrom.None)
@@ -127,14 +166,10 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
     }
 
     private fun setAdapter(projectResponse: MyProjectResponse) {
-        if (projectResponse.data!!.size > 0) {
-            allApplicationsAdapter.submitList(projectResponse.data!!)
-            // binding.rvShortList.visibility = View.VISIBLE
-            //binding.tvNoRecordFound.visibility = View.GONE
-        } else {
-            // binding.rvShortList.visibility = View.GONE
-            // binding.tvNoRecordFound.visibility = View.VISIBLE
+        if (projectResponse.data.size > 0) {
+            allApplicationsAdapter.submitList(projectResponse.data)
         }
+        manageCardAndTextViewVisibility()
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
@@ -142,8 +177,6 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
 
     override fun onCardSwiped(direction: Direction?) {
         if (direction!!.name.equals("Left")) {
-         //   val acceptRejectArtistRequest = AcceptRejectArtistRequest()
-          /*  acceptRejectArtistRequest.castingId = preferences.getString(AppConstants.)*/
               val acceptRejectProjectRequest = AcceptRejectProjectRequest()
             acceptRejectProjectRequest.id = projectList.data[cardPosition].id.toString()
             acceptRejectProjectRequest.status = "2"
@@ -185,10 +218,14 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
         }
     }
 
-   /* private fun showSelectProject() {
-        showSelectProjectDialog(requireActivity(), projectList)
-        {
+    private fun manageCardAndTextViewVisibility(){
+        if (projectList.data.size > 0) {
+            binding.cardAllApplications.visibility = View.VISIBLE
+            binding.tvNoAppFound.visibility = View.GONE
+        } else {
+            binding.cardAllApplications.visibility = View.GONE
+            binding.tvNoAppFound.visibility = View.VISIBLE
+        }
+    }
 
-        }*/
-   // }
 }

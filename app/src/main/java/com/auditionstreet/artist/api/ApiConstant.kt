@@ -45,6 +45,7 @@ class ApiConstant {
         const val UPLOAD_MEDIA = "updateArtistProfile"
         const val ACCEPT_REJECT_PROJECT = "common/acceptReject"
         const val GET_HOME_DATA = "artist/homeAPI/"
+        const val REPORT_CASTING = "reportCasting"
 
     }
 }

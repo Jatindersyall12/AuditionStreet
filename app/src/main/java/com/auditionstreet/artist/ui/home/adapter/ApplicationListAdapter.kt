@@ -64,7 +64,11 @@ class ApplicationListAdapter(
                 }
                // holder.bind(differ.currentList[position])
                 holder.itemView.tvName.text = differ.currentList[position].title
-                holder.itemView.tvActress.text = "Coming Soon"
+                if (differ.currentList[position].gender.equals("Male")){
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actor)
+                }else{
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actress)
+                }
                 holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
                 holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
                         "."+differ.currentList[position].heightIn+"ft"

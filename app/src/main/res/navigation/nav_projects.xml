@@ -9,13 +9,7 @@
         android:name="com.auditionstreet.artist.ui.projects.fragment.MyProjectsListingFragment"
         android:label="@string/str_projects"
         tools:layout="@layout/fragment_my_projects">
-        <action
-            android:id="@+id/navigateToAddProject"
-            app:destination="@id/addProjectFragment"
-            app:enterAnim="@anim/in_from_right"
-            app:exitAnim="@anim/out_to_left"
-            app:popEnterAnim="@anim/in_from_left"
-            app:popExitAnim="@anim/out_to_right" />
+
         <action
             android:id="@+id/navigateToProjectDetail"
             app:destination="@id/addProjectDetail"
@@ -25,16 +19,7 @@
             app:popExitAnim="@anim/out_to_right" />
 
     </fragment>
-    <fragment
-        android:id="@+id/addProjectFragment"
-        android:name="com.auditionstreet.artist.ui.projects.fragment.AddProjectFragment"
-        android:label="@string/str_add_project"
-        tools:layout="@layout/fragment_add_project" >
-        <argument
-            android:name="projectId"
-            app:argType="string"
-            android:defaultValue='""' />
-    </fragment>
+
     <fragment
         android:id="@+id/addProjectDetail"
         android:name="com.auditionstreet.artist.ui.projects.fragment.MyProjectDetailFragment"

@@ -21,6 +21,7 @@ import com.auditionstreet.artist.ui.home.adapter.HomeShortListAdapter
 import com.auditionstreet.artist.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.artist.ui.home.viewmodel.HomeViewModel
 import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
+import com.auditionstreet.artist.ui.projects.fragment.MyProjectsListingFragmentDirections
 import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
@@ -84,12 +85,6 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             Status.SUCCESS -> {
                 hideProgress()
                 when (apiResponse.apiConstant) {
-                    /*ApiConstant.GET_PROJECTS -> {
-                        setAdapter(apiResponse.data as ProjectResponse)
-                        setApplicationAdapter(apiResponse.data)
-                        setShortListAdapter(apiResponse.data)
-
-                    }*/
                     ApiConstant.GET_HOME_DATA ->{
                         val homeScreenDetailResponse = apiResponse.data as HomeApiResponse
                         pendingProjectList = homeScreenDetailResponse.data.pendingRequest as ArrayList<HomeApiResponse.Data.PendingRequest>
@@ -123,7 +118,11 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             layoutManager = LinearLayoutManager(activity)
             projectListAdapter = ProjectListAdapter(requireActivity())
             { position: Int ->
-                Log.e("position", "" + position)
+                sharedViewModel.setDirection(
+                    MyProjectsListingFragmentDirections.navigateToProjectDetail(
+                        pendingProjectList[position].projectId
+                    )
+                )
             }
             adapter = projectListAdapter
             binding.rvSlidingProject.setLayoutManager(
@@ -139,8 +138,11 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             layoutManager = LinearLayoutManager(activity)
             applicationListAdapter = ApplicationListAdapter(requireActivity())
             { position: Int ->
-                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                AppConstants.APPLICATIONID = projectList[position].id.toString()
+                val i = Intent(requireActivity(), AllApplicationActivity::class.java)
                 startActivity(i)
+               /* val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                startActivity(i)*/
             }
             adapter = applicationListAdapter
             binding.rvApplication.setLayoutManager(

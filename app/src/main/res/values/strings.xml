@@ -81,6 +81,10 @@
     <string name="str_coming_soon">Coming Soon..</string>
     <string name="str_view_details">View Details</string>
     <string name="str_view_profile">View Profile</string>
+    <string name="str_view_video">View Video</string>
+    <string name="str_view_application">View Application</string>
+    <string name="actor">Actor</string>
+    <string name="actress">Actress</string>
 
     <!-- ShortList Fragment -->
     <string name="str_shortlist_frag">ShortList Fragment</string>
@@ -91,6 +95,7 @@
     <string name="str_shortlst">Shortlist</string>
     <string name="str_block">Block</string>
     <string name="str_select_projects">Select Projects</string>
+    <string name="no_application_found">No Application Found</string>
 
 
     <!-- Facebook -->
@@ -226,4 +231,6 @@
     <string name="str_yes">Yes</string>
     <string name="str_no">No</string>
     <string name="delete_dialog">Are you sure you want to delete ? </string>
+    <string name="report">Report</string>
+
 </resources>

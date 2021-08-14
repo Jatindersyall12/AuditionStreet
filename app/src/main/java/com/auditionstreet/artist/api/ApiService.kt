@@ -5,6 +5,7 @@ import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_GROUP
 import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_PROJECT
 import com.auditionstreet.artist.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.artist.api.ApiConstant.Companion.LOGIN
+import com.auditionstreet.artist.api.ApiConstant.Companion.REPORT_CASTING
 import com.auditionstreet.artist.api.ApiConstant.Companion.SIGN_UP
 import com.auditionstreet.artist.api.ApiConstant.Companion.UPLOAD_MEDIA
 import com.auditionstreet.artist.model.response.*
@@ -73,4 +74,8 @@ interface ApiService {
 
     @GET
     suspend fun getHomeData(@Url url: String): Response<HomeApiResponse>
+
+    @POST(REPORT_CASTING)
+    suspend fun reportCasting(@Body reportCastingRequest: ReportCastingRequest): Response<AddGroupResponse>
+
 }

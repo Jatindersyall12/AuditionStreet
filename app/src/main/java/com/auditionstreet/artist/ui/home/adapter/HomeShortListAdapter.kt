@@ -68,10 +68,14 @@ class HomeShortListAdapter(
                     mCallback.invoke(position)
                 }
                 holder.itemView.tvName.text = differ.currentList[position].title
-                holder.itemView.tvActress.text = "Coming Soon"
-                holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
-                holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
-                        "."+differ.currentList[position].heightIn+"ft"
+                if (differ.currentList[position].projectgender.equals("Male")){
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actor)
+                }else{
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actress)
+                }
+                holder.itemView.tvAge.text = "Age:"+differ.currentList[position].projectAge
+                holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].projectheightFt+
+                        "."+differ.currentList[position].projectheightIn+"ft"
             }
         }
     }

@@ -27,7 +27,7 @@
             android:layout_width="@dimen/_13sdp"
             android:layout_height="@dimen/_13sdp"
             android:contentDescription="@string/str_divider"
-            android:src="@drawable/ic_add_icon"
+            android:src="@drawable/ic_play"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
             android:layout_marginTop="@dimen/_23sdp"
             android:layout_marginEnd="@dimen/_13sdp"
             android:contentDescription="@string/str_add_media"
-            android:src="@drawable/ic_add_icon"
+            android:src="@drawable/ic_delete"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

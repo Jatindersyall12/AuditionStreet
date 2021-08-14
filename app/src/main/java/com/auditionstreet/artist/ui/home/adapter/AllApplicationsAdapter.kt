@@ -78,6 +78,12 @@ class AllApplicationsAdapter(
                 holder.itemView.tvLocationDetail.text = differ.currentList[position].location
                 holder.itemView.tvDescDetail.text = differ.currentList[position].description
                 holder.itemView.tvGender.text = differ.currentList[position].gender
+                holder.itemView.btnViewProfile.setOnClickListener {
+                    mCallback.invoke(0)
+                }
+                holder.itemView.btnReport.setOnClickListener {
+                    mCallback.invoke(1)
+                }
             }
         }
     }
@@ -102,6 +108,7 @@ class AllApplicationsAdapter(
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
+
 
         }
     }

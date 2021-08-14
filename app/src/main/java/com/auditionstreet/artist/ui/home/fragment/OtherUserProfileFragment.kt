@@ -12,6 +12,7 @@ import com.auditionstreet.artist.model.response.ProjectResponse
 import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.artist.ui.projects.adapter.OtherUserImageAdapter
 import com.auditionstreet.artist.ui.projects.adapter.OtherUserVideoAdapter
+import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.utils.AppBaseFragment
@@ -26,6 +27,7 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
     private val binding by viewBinding(FragmentOtherUserBinding::bind)
     private lateinit var otherUserImageAdapter: OtherUserImageAdapter
     private lateinit var otherUserVideoAdapter: OtherUserVideoAdapter
+    private var castingId = ""
 
     private val viewModel: ProjectViewModel by viewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,6 +35,7 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
         setListeners()
         setObservers()
         init()
+        castingId = AppConstants.CASTINGID
     }
 
     private fun setListeners() {
