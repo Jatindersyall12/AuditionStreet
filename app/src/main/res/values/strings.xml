@@ -233,4 +233,7 @@
     <string name="delete_dialog">Are you sure you want to delete ? </string>
     <string name="report">Report</string>
 
+    <!-- Empty Message -->
+    <string name="no_project_found">No Project Found</string>
+
 </resources>

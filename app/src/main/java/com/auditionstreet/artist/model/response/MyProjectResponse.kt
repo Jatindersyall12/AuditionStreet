@@ -42,6 +42,10 @@ data class MyProjectResponse(
         @SerializedName("toDate")
         val toDate: String?,
         @SerializedName("updated_at")
-        val updatedAt: String?
+        val updatedAt: String?,
+        @SerializedName("castingStatus")
+        val castingStatus: String?,
+        @SerializedName("projectId")
+        val projectId: String?
     )
 }

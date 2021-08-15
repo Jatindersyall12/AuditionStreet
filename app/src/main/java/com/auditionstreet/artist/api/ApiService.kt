@@ -78,4 +78,6 @@ interface ApiService {
     @POST(REPORT_CASTING)
     suspend fun reportCasting(@Body reportCastingRequest: ReportCastingRequest): Response<AddGroupResponse>
 
+    @GET
+    suspend fun getOtherProfile(@Url url: String): Response<OtherProfileResponse>
 }

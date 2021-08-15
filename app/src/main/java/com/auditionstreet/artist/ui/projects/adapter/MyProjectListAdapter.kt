@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -58,7 +59,7 @@ class MyProjectListAdapter(
             is ConnectionHolder -> {
                 holder.bind(differ.currentList[position])
                 holder.itemView.btnViewDetail.setOnClickListener {
-                    mCallback.invoke(differ.currentList[position].id.toString())
+                    mCallback.invoke(differ.currentList[position].projectId.toString())
                 }
             }
         }
@@ -81,7 +82,15 @@ class MyProjectListAdapter(
         fun bind(item: MyProjectResponse.Data) = with(itemView) {
             val rnd = Random()
             itemView.tvProjectRequirement.text=item.title
-            val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+            var color : Int ?= null
+            if (item.castingStatus == "0"){
+                color = ContextCompat.getColor(mContext, R.color.green)
+            }else if(item.castingStatus == "1"){
+                color = ContextCompat.getColor(mContext, R.color.yellow)
+            }else{
+                color = ContextCompat.getColor(mContext, R.color.red)
+            }
+          //  val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
             itemView.btnViewDetail.background.setTint(color)
             itemView.tvProject.setTextColor(color)
 

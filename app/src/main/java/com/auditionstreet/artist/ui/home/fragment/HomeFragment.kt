@@ -176,10 +176,10 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         if (homeApiResponse.data.pendingRequest.size > 0) {
             projectListAdapter.submitList(homeApiResponse.data.pendingRequest)
             binding.rvSlidingProject.visibility = View.VISIBLE
-            //binding.tvNoRecordFound.visibility = View.GONE
+            binding.tvNoProjectFound.visibility = View.GONE
         } else {
             binding.rvSlidingProject.visibility = View.GONE
-            // binding.tvNoRecordFound.visibility = View.VISIBLE
+             binding.tvNoProjectFound.visibility = View.VISIBLE
         }
     }
 
@@ -187,10 +187,10 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         if (homeApiResponse.data.projectList.size > 0) {
             applicationListAdapter.submitList(homeApiResponse.data.projectList)
             binding.rvApplication.visibility = View.VISIBLE
-            //binding.tvNoRecordFound.visibility = View.GONE
+            binding.tvNoProjectFoundCurrent.visibility = View.GONE
         } else {
             binding.rvApplication.visibility = View.GONE
-            // binding.tvNoRecordFound.visibility = View.VISIBLE
+             binding.tvNoProjectFoundCurrent.visibility = View.VISIBLE
         }
 
     }
@@ -199,10 +199,10 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         if (homeApiResponse.data.acceptList.size > 0) {
             shortListAdapter.submitList(homeApiResponse.data.acceptList)
             binding.rvShortlist.visibility = View.VISIBLE
-            //binding.tvNoRecordFound.visibility = View.GONE
+            binding.tvNoProjectFoundSortListed.visibility = View.GONE
         } else {
             binding.rvShortlist.visibility = View.GONE
-            // binding.tvNoRecordFound.visibility = View.VISIBLE
+             binding.tvNoProjectFoundSortListed.visibility = View.VISIBLE
         }
 
     }

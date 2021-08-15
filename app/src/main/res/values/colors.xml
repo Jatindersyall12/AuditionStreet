@@ -15,5 +15,7 @@
     <color name="dim_grey">#ececec</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0000</color>
+    <color name="green">#81c639</color>
+    <color name="yellow">#ffd700</color>
 
 </resources>
