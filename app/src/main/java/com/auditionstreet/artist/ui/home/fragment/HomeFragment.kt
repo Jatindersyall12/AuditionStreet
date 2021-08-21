@@ -158,6 +158,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             layoutManager = LinearLayoutManager(activity)
             shortListAdapter = HomeShortListAdapter(requireActivity())
             { position: Int ->
+                AppConstants.CASTINGID = acceptedList!![position].castingId.toString()
                 val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
                 startActivity(i)
             }

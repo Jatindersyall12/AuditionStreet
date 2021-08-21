@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.auditionstreet.artist.R
 import com.auditionstreet.artist.model.response.ProjectResponse
 import com.auditionstreet.artist.utils.showToast
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.project_item.view.*
 import kotlinx.android.synthetic.main.shortlist_item.view.*
 import java.util.*
@@ -59,7 +60,20 @@ class ShortListAdapter(
             is ConnectionHolder -> {
                 holder.itemView.imgFavourite.setOnClickListener(this)
                 holder.itemView.tvChat.setOnClickListener(this)
-                holder.itemView.tvViewProfile.setOnClickListener(this)
+                holder.itemView.tvViewProfile.setOnClickListener {
+                    mCallback.invoke(position)
+                }
+                holder.itemView.tvName.text = differ.currentList[position].title
+                if (differ.currentList[position].gender.equals("Male")){
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actor)
+                }else{
+                    holder.itemView.tvActress.text = mContext.getString(R.string.actress)
+                }
+                holder.itemView.tvAge.text = "Age:"+differ.currentList[position].age
+                holder.itemView.tvHeight.text = "Height: "+differ.currentList[position].heightFt+
+                        "."+differ.currentList[position].heightIn+"ft"
+               /* Glide.with(mContext).load(differ.currentList[position].image)
+                    .into(holder.itemView.imgRound)*/
 
 //                holder.bind(differ.currentList[position])
             }
@@ -67,8 +81,7 @@ class ShortListAdapter(
     }
 
     override fun getItemCount(): Int {
-        //return differ.currentList.size
-        return 6
+        return differ.currentList.size
     }
 
     fun submitList(projectResponse: List<ProjectResponse.Data>) {

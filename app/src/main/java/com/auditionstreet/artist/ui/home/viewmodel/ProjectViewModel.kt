@@ -43,16 +43,16 @@ class ProjectViewModel @ViewModelInject constructor(
     val reportCasting: LiveData<Event<Resource<AddGroupResponse>>>
         get() = _report_casting
 
-    private fun getProject(projectRequest: ProjectRequest) {
+    fun getProject(url: String) {
         viewModelScope.launch {
-            _users.postValue(Event(Resource.loading(ApiConstant.GET_PROJECTS, null)))
+            _users.postValue(Event(Resource.loading(ApiConstant.GET_SHORTLISTED_LIST, null)))
             if (networkHelper.isNetworkConnected()) {
-                projectRepository.getProjects(projectRequest).let {
+                projectRepository.getProjects(url).let {
                     if (it.isSuccessful && it.body() != null) {
                         _users.postValue(
                             Event(
                                 Resource.success(
-                                    ApiConstant.GET_PROJECTS,
+                                    ApiConstant.GET_SHORTLISTED_LIST,
                                     it.body()
                                 )
                             )
@@ -61,7 +61,7 @@ class ProjectViewModel @ViewModelInject constructor(
                         _users.postValue(
                             Event(
                                 Resource.error(
-                                    ApiConstant.GET_PROJECTS,
+                                    ApiConstant.GET_SHORTLISTED_LIST,
                                     it.code(),
                                     it.errorBody().toString(),
                                     null

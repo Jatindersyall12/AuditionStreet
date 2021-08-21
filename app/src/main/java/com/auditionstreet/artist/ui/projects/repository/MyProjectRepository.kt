@@ -6,7 +6,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class MyProjectRepository @Inject constructor(val apiService: ApiService) {
-    suspend fun getMyProjects(url: String):Response<MyProjectResponse> =apiService.getMyProjects(url)
+    suspend fun getMyProjects(url: String):Response<MyProjectResponse> =apiService.getAllProjects(url)
 
 }
 

@@ -32,8 +32,8 @@ class ApiConstant {
         const val PUBLIC_PROFILE = "&public_profile=true"
         const val LOGIN = "artistLogin"
 
-        const val GET_PROJECTS = ""
-        const val GET_MY_PROJECTS = "artist/requestApplication"
+        const val GET_PROJECTS = "artist/requestApplication"
+        const val GET_MY_PROJECTS = "artist/projectList"
         const val GET_MY_PROJECTS_DETAILS = "projectDetail"
         const val GET_ALL_ADMINS = "groupMemberList"
         const val GET_ALL_USER = "getAllUser"
@@ -47,6 +47,7 @@ class ApiConstant {
         const val GET_HOME_DATA = "artist/homeAPI/"
         const val REPORT_CASTING = "reportCasting"
         const val  GET_OTHER_PROFILE = "castingDetail"
+        const val GET_SHORTLISTED_LIST = "artist/acceptedApplication"
 
     }
 }

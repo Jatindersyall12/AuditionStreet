@@ -61,6 +61,9 @@ interface ApiService {
     @POST(ADD_GROUP)
     suspend fun addGroup(@Body groupRequest: AddGroupRequest): Response<AddGroupResponse>
 
+    @GET
+    suspend fun getProjects(@Url url: String): Response<ProjectResponse>
+
 
     @Multipart
     @POST(SIGN_UP)
@@ -80,4 +83,7 @@ interface ApiService {
 
     @GET
     suspend fun getOtherProfile(@Url url: String): Response<OtherProfileResponse>
+
+    @GET
+    suspend fun getAllProjects(@Url url: String): Response<MyProjectResponse>
 }

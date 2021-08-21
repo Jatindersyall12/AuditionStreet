@@ -43,7 +43,7 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
     private fun getMyProjects() {
 
         viewModel.getMyProject(
-            BuildConfig.BASE_URL + ApiConstant.GET_MY_PROJECTS + "/" + preferences.getString(
+            BuildConfig.BASE_URL + ApiConstant.GET_PROJECTS + "/" + preferences.getString(
                 AppConstants.USER_ID
             )
         )
@@ -61,7 +61,7 @@ class MyProjectsListingFragment : AppBaseFragment(R.layout.fragment_my_projects)
             Status.SUCCESS -> {
                 hideProgress()
                 when (apiResponse.apiConstant) {
-                    ApiConstant.GET_MY_PROJECTS -> {
+                    ApiConstant.GET_PROJECTS -> {
                         setAdapter(apiResponse.data as MyProjectResponse)
                     }
                 }

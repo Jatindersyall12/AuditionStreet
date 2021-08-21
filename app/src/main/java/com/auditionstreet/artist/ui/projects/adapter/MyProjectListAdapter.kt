@@ -84,9 +84,9 @@ class MyProjectListAdapter(
             itemView.tvProjectRequirement.text=item.title
             var color : Int ?= null
             if (item.castingStatus == "0"){
-                color = ContextCompat.getColor(mContext, R.color.green)
-            }else if(item.castingStatus == "1"){
                 color = ContextCompat.getColor(mContext, R.color.yellow)
+            }else if(item.castingStatus == "1"){
+                color = ContextCompat.getColor(mContext, R.color.green)
             }else{
                 color = ContextCompat.getColor(mContext, R.color.red)
             }
