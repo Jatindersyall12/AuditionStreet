@@ -1,7 +1,6 @@
 package com.auditionstreet.artist.ui.home.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,9 +10,7 @@ import com.auditionstreet.artist.R
 import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentOtherUserBinding
 import com.auditionstreet.artist.model.response.OtherProfileResponse
-import com.auditionstreet.artist.model.response.ProjectResponse
 import com.auditionstreet.artist.ui.home.viewmodel.OtherProfileViewModel
-import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.artist.ui.projects.adapter.OtherUserImageAdapter
 import com.auditionstreet.artist.ui.projects.adapter.OtherUserVideoAdapter
 import com.auditionstreet.artist.ui.projects.adapter.WorkListAdapter
@@ -130,9 +127,8 @@ class OtherUserProfileFragment : AppBaseFragment(R.layout.fragment_other_user),
                 .into(binding.ivProfileImage)
         }
         binding.tvTitle.setText(profileResponse.data[0]!!.castingDetails!!.companyName)
-        binding.tvEmail.text = profileResponse.data[0]!!.castingDetails!!.email
-        binding.tvAgencyType.text = profileResponse.data[0]!!.castingDetails!!.agencyType
-
+        binding.tvEmail.text = resources.getString(R.string.str_email_profile)+": "+profileResponse.data[0]!!.castingDetails!!.email
+        binding.tvAgencyType.text = resources.getString(R.string.experiance)+": "+profileResponse.data[0]!!.castingDetails!!.year
         binding.headingExperiance.text = profileResponse.data[0]!!.castingDetails!!.year
       //  binding.headingAppliedProject.text = profileResponse.data[0]!!.totalApplication.toString()
       //  binding.headingSelectedProject.text = profileResponse.data[0]!!.acceptedApplication.toString()

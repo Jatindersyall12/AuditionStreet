@@ -70,7 +70,7 @@
     <string name="str_home_selected_project">Selected Projects</string>
     <string name="str_image">Images</string>
     <string name="str_video">Videos</string>
-    <string name="str_bio">Bio</string>
+    <string name="str_bio">bio</string>
 
     <!-- Home Fragment -->
 
@@ -117,6 +117,12 @@
     <string name="str_language_label">language</string>
     <string name="str_bio_label">bio</string>
     <string name="str_artistId_label">artistId</string>
+    <string name="str_email_profile">Email</string>
+    <string name="experiance">Experiance in years</string>
+    <string name="tv_pending">Pending</string>
+    <string name="tv_rejected">Rejected</string>
+    <string name="tv_accepted">Accepted</string>
+
 
 
     <!-- other user profile Fragment -->
@@ -235,5 +241,8 @@
 
     <!-- Empty Message -->
     <string name="no_project_found">No Project Found</string>
+    <string name="no_application_founds">No Application Found</string>
+    <string name="no_shortlist_found">No Shortlist Found</string>
+    <string name="tv_status">Status:</string>
 
 </resources>

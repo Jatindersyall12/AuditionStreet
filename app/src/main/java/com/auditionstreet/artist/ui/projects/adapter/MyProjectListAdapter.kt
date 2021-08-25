@@ -2,7 +2,6 @@ package com.auditionstreet.artist.ui.projects.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,18 +80,24 @@ class MyProjectListAdapter(
 
         fun bind(item: MyProjectResponse.Data) = with(itemView) {
             val rnd = Random()
-            itemView.tvProjectRequirement.text=item.title
-            var color : Int ?= null
-            if (item.castingStatus == "0"){
+            itemView.tvProjectRequirement.text = item.title
+            var color: Int
+            var status: String
+            if (item.castingStatus == "0") {
                 color = ContextCompat.getColor(mContext, R.color.yellow)
-            }else if(item.castingStatus == "1"){
+                status = resources.getString(R.string.tv_pending)
+            } else if (item.castingStatus == "1") {
                 color = ContextCompat.getColor(mContext, R.color.green)
-            }else{
+                status = resources.getString(R.string.tv_accepted)
+            } else {
                 color = ContextCompat.getColor(mContext, R.color.red)
+                status = resources.getString(R.string.tv_rejected)
             }
-          //  val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            itemView.btnViewDetail.background.setTint(color)
-            itemView.tvProject.setTextColor(color)
+            //  val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+            //itemView.btnViewDetail.background.setTint(color)
+            //itemView.tvProject.setTextColor(color)
+            itemView.tvStatusDetail.setTextColor(color)
+            itemView.tvStatusDetail.setText(status)
 
         }
     }

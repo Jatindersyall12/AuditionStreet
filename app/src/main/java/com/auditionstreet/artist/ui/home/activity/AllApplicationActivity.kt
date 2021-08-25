@@ -24,6 +24,7 @@ class AllApplicationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setUpToolbar(toolbar,getString(R.string.str_project),false,true)
         setNavigationController()
        // setUpToolbar()
     }

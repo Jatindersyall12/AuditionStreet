@@ -53,7 +53,7 @@ class SignUpViewModel @ViewModelInject constructor(
                         )
                 }
                 signUpRepository.updateProfile(map, photo).let {
-                    if (it.isSuccessful && it.body() != null) {
+                    if (it.isSuccessful && it.body() != null&& it.body()!!.code==ApiConstant.STATUS_200) {
                         _sign_up.postValue(
                             (Event(
                                 Resource.success(
@@ -63,15 +63,25 @@ class SignUpViewModel @ViewModelInject constructor(
                             ))
                         )
                     } else {
-                        if (it.code() == ApiConstant.STATUS_302) {
+                        if (it.body()!!.code == ApiConstant.STATUS_302) {
                             _sign_up.postValue(
+                                Event(
+                                    Resource.error(
+                                        ApiConstant.SIGN_UP,
+                                        it.code(),
+                                        it.body()!!.msg.toString(),
+                                        null
+                                    )
+                                )
+                            )
+                           /* _sign_up.postValue(
                                 Event(
                                     Resource.requiredResource(
                                         ApiConstant.SIGN_UP,
                                         R.string.err_email_msg
                                     )
                                 )
-                            )
+                            )*/
                         } else {
                             _sign_up.postValue(
                                 Event(

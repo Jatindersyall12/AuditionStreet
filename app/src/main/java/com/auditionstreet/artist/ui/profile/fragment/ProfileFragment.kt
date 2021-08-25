@@ -60,6 +60,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     private var images: MutableList<com.esafirm.imagepicker.model.Image> = mutableListOf()
     private var profileImageFile: File? = null
     private var compressImage = CompressFile()
+
     @Inject
     lateinit var preferences: Preferences
     private lateinit var profileResponse: ProfileResponse
@@ -165,6 +166,10 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.image)
                 .into(binding.imgProfile)
         }
+        preferences.setString(
+            AppConstants.USER_IMAGE,
+            profileResponse.data[0]!!.artistDetails!!.image
+        )
         binding.etxName.setText(profileResponse.data[0]!!.artistDetails!!.name)
         binding.etxSubName.setText(profileResponse.data[0]!!.artistDetails!!.gender)
         binding.etxYear.setText(profileResponse.data[0]!!.artistDetails!!.year)
@@ -343,7 +348,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             profileAdapter = WorkListAdapter(requireActivity())
             { position: Int ->
                 isImageDelete = listGallery[position].isImage
-                deleteMediaPos=position
+                deleteMediaPos = position
                 if (listGallery[position].isLocal) {
                     listGallery.removeAt(position)
                 } else {
@@ -414,6 +419,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                         Glide.with(this).load(path)
                             .into(binding.imgIntroVideo)
                         introVideoPath = path
+                        binding.imgPlay.visibility = View.VISIBLE
                     } else {
                         request.path = path
                         request.isImage = false

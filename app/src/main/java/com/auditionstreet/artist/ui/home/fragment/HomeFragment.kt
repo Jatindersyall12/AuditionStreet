@@ -2,7 +2,6 @@ package com.auditionstreet.artist.ui.home.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import com.auditionstreet.artist.R
 import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentHomeBinding
 import com.auditionstreet.artist.model.response.HomeApiResponse
-import com.auditionstreet.artist.model.response.ProjectResponse
 import com.auditionstreet.artist.storage.preference.Preferences
 import com.auditionstreet.artist.ui.home.activity.AllApplicationActivity
 import com.auditionstreet.artist.ui.home.activity.OtherUserProfileActivity
@@ -30,7 +28,6 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.my_project_item.view.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -55,8 +52,13 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         setObservers()
         init()
         getHomeScreenData()
+        scrollToTop()
     }
-
+    private fun scrollToTop() {
+        binding.layScroll.post {
+            binding.layScroll.fullScroll(View.FOCUS_UP)
+        }
+    }
     private fun getHomeScreenData(){
         viewModelHome.getHomeScreenData(
             BuildConfig.BASE_URL + ApiConstant.GET_HOME_DATA + preferences.getString(
@@ -192,8 +194,8 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         } else {
             binding.rvApplication.visibility = View.GONE
              binding.tvNoProjectFoundCurrent.visibility = View.VISIBLE
+             binding.tvViewAllApplication.visibility=View.GONE
         }
-
     }
 
     private fun setShortListAdapter(homeApiResponse: HomeApiResponse) {
@@ -204,6 +206,8 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         } else {
             binding.rvShortlist.visibility = View.GONE
              binding.tvNoProjectFoundSortListed.visibility = View.VISIBLE
+            binding.tvShortListMore.visibility=View.GONE
+
         }
 
     }

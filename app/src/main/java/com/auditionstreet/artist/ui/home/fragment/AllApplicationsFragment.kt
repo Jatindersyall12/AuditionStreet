@@ -183,7 +183,7 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
             acceptRejectProjectRequest.userStatus = "1"
             acceptRejectProjectRequest.artistId = preferences.getString(AppConstants.USER_ID)
             viewModel.acceptRejectProject(acceptRejectProjectRequest)
-            showToast(requireActivity(), "Rejected")
+            showToast(requireActivity(), "Application Rejected")
         }
         else {
             val acceptRejectProjectRequest = AcceptRejectProjectRequest()
@@ -192,7 +192,7 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
             acceptRejectProjectRequest.userStatus = "1"
             acceptRejectProjectRequest.artistId = preferences.getString(AppConstants.USER_ID)
             viewModel.acceptRejectProject(acceptRejectProjectRequest)
-            showToast(requireActivity(), "Accpeted")
+            showToast(requireActivity(), "Application Accepted")
         }
     }
 

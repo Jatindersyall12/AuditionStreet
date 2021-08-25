@@ -27,7 +27,7 @@
                     android:id="@+id/ivProfileImage"
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
-                    android:src="@drawable/dumy_image_1"
+                    android:src="@drawable/ic_dummy_profile_image"
                     app:siBorderColor="@color/black"
                     app:siBorderWidth="2dp"
                     app:siRadius="6dp"
@@ -36,7 +36,7 @@
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp">
+                    android:paddingStart="5dp">
 
                     <TableRow
                         android:id="@+id/tblOne"
@@ -51,6 +51,7 @@
                             android:text="Orion Flinch"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_20sdp" />
+
                     </TableRow>
 
                     <TableRow
@@ -63,10 +64,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="Actress"
-                            android:visibility="gone"
+                            android:text="Casting Agency"
                             android:textColor="@color/gray"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_14sdp" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
@@ -290,13 +290,12 @@
 
             <com.auditionstreet.artist.customviews.CustomTextView
                 android:id="@+id/tvBio"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:paddingLeft="@dimen/_17sdp"
-                android:text="I am Orion Flinch and for the last 3 years, I worked as a photo model. I have a huge passion for acting and I love being in front of the camera. I mainly shoot fashion, and swimwear but I also enjoy creative projects like bodypaint or dress up. I am currently modelling for XYZ  Model Agency and individual photographers."
+                android:gravity="left"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintLeft_toLeftOf="parent"

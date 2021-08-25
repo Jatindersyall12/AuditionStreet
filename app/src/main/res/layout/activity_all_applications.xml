@@ -6,16 +6,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/layToolBar"
+            layout="@layout/toolbar" />
+
         <fragment
             android:id="@+id/navHostAllApplicationsFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_40sdp"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_all_applications"
+            app:layout_constraintTop_toBottomOf="@+id/layToolBar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-           />
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
