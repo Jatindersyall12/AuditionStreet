@@ -77,6 +77,7 @@
     <string name="str_home_fragment">Home Fragment</string>
     <string name="str_shortlist">Shortlisted</string>
     <string name="str_application">Applications</string>
+    <string name="str_audition">On-going Auditions</string>
     <string name="str_view_all">View All</string>
     <string name="str_coming_soon">Coming Soon..</string>
     <string name="str_view_details">View Details</string>
@@ -241,8 +242,13 @@
 
     <!-- Empty Message -->
     <string name="no_project_found">No Project Found</string>
-    <string name="no_application_founds">No Application Found</string>
+    <string name="no_audition_founds">No Audition Found</string>
     <string name="no_shortlist_found">No Shortlist Found</string>
     <string name="tv_status">Status:</string>
+
+    <!--First time here-->
+    <string name="str_first_time_here">First Time Here</string>
+    <string name="swipe_to_continue">Swipe to continue</string>
+    <string name="swipe_to_complete">Swipe to Complete</string>
 
 </resources>

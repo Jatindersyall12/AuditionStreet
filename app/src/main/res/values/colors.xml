@@ -17,5 +17,6 @@
     <color name="red">#FF0000</color>
     <color name="green">#81c639</color>
     <color name="yellow">#ffd700</color>
+    <color name="selected_dot">#757575</color>
 
 </resources>
