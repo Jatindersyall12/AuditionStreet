@@ -1,10 +1,12 @@
 package com.auditionstreet.artist.ui.home.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.auditionstreet.artist.BuildConfig
@@ -19,6 +21,7 @@ import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.megamind.razorpay.RazorPayActivity
 import com.silo.model.request.AcceptRejectProjectRequest
 import com.silo.model.request.ReportCastingRequest
 import com.silo.utils.AppBaseFragment
@@ -133,8 +136,15 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
             { position: Int ->
                 if (position == 0){
                     AppConstants.CASTINGID = projectList.data[cardPosition].castingId.toString()
-                    val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
-                    startActivity(i)
+                   /* val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                    startActivity(i)*/
+                    val intent = Intent(requireActivity(), RazorPayActivity::class.java)
+                    intent.putExtra(resources.getString(R.string.name), "Vishav")
+                    intent.putExtra(resources.getString(R.string.email), "vishav@megamindcreations.com")
+                    intent.putExtra(resources.getString(R.string.phone), "9815240558")
+                    intent.putExtra(resources.getString(R.string.amount), "1")
+                    intent.putExtra(resources.getString(R.string.currency), "INR")
+                    launchRazorPayActivity.launch(intent)
                 }else if(position == 1){
                     val reportCastingRequest = ReportCastingRequest()
                     reportCastingRequest.artistId = preferences.getString(AppConstants.USER_ID)
@@ -225,6 +235,15 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
         } else {
             binding.cardAllApplications.visibility = View.GONE
             binding.tvNoAppFound.visibility = View.VISIBLE
+        }
+    }
+
+    var launchRazorPayActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val data: Intent? = result.data
+        if (result.resultCode == Activity.RESULT_OK) {
+            data!!.getStringExtra(resources.getString(R.string.transaction_id))?.let { Log.e("message", it) }
+        } else if (result.resultCode == Activity.RESULT_CANCELED){
+            data!!.getStringExtra(resources.getString(R.string.error_message))?.let { Log.e("message", it) }
         }
     }
 

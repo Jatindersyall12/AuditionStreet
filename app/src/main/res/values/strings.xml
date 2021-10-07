@@ -215,6 +215,14 @@
     <string name="str_work">Work</string>
     <string name="str_into_video">Intro Video</string>
 
+    <string name="select_language">Select Language</string>
+    <string name="select_body_type">Select Body Type</string>
+    <string name="select_skin_tone">Select Skin Tone</string>
+
+    <string name="str_no_language_found">No language found.Please add language first.</string>
+    <string name="str_no_body_type_found">No body type found.Please add body type first.</string>
+    <string name="str_no_skin_tone_found">No skin tone found.Please add skin tone first.</string>
+
     <string name="str_done">Done</string>
     <string name="str_add_media">Add Media</string>
     <string name="tv_media">No Media Found.</string>

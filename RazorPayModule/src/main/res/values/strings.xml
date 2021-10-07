@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">RazorPay</string>
+
+    <string name="razor_pay_key">rzp_test_jsNSmoAPknTy2N</string>
+
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="phone">phone</string>
+    <string name="amount">amount</string>
+    <string name="currency">currency</string>
+
+    <string name="transaction_id">transactionId</string>
+    <string name="error_message">Error Message</string>
+</resources>

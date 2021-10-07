@@ -48,6 +48,7 @@ class ApiConstant {
         const val REPORT_CASTING = "reportCasting"
         const val  GET_OTHER_PROFILE = "castingDetail"
         const val GET_SHORTLISTED_LIST = "artist/acceptedApplication"
+        const val GET_LANGUAGE_BODY_TYPE = "common/getList"
 
     }
 }

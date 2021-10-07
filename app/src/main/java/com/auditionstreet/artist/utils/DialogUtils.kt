@@ -2,6 +2,7 @@
 
 package com.auditionstreet.artist.utils
 
+import android.app.ActionBar
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -32,6 +33,10 @@ import com.auditionstreet.artist.customviews.CustomTextView
 import com.auditionstreet.artist.customviews.CustomTextViewBold
 import com.auditionstreet.artist.model.response.AllAdminResponse
 import com.auditionstreet.artist.model.response.AllUsersResponse
+import com.auditionstreet.artist.model.response.GetBodyTypeLanguageResponse
+import com.auditionstreet.artist.ui.profile.adapter.BodyTypeListAdapter
+import com.auditionstreet.artist.ui.profile.adapter.LanguageListAdapter
+import com.auditionstreet.artist.ui.profile.adapter.SkinToneListAdapter
 import com.auditionstreet.artist.ui.projects.adapter.AllAdminListAdapter
 import com.auditionstreet.artist.ui.projects.adapter.AllUserListAdapter
 import com.bumptech.glide.Glide
@@ -94,9 +99,9 @@ fun showImageOrVideoDialog(
             playerView.player_view.player = null
         }
     }
-    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
-    val height = 750
-    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+ /*   val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = 750*/
+    dialogView.getWindow()!!.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT)
     return dialogView
 }
 
@@ -632,6 +637,154 @@ fun showProgressDialog(
     dialogView.show()
     val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.70)
     val height = 370
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+fun showLanguageSelectionDialog(
+    mContext: Context,
+    languageList: ArrayList<GetBodyTypeLanguageResponse.Data.Language>,
+    mCallback: (year: String) -> Unit
+): Dialog {
+    lateinit var rvLanguageAdapter: LanguageListAdapter
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_language,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    val rvLanguage = dialogView.findViewById<RecyclerView>(R.id.rvLanguage)
+    val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
+
+    btnDone.setOnClickListener {
+        dialogView.cancel()
+        mCallback.invoke("Sd")
+    }
+    if (languageList.size > 0) {
+        rvLanguage.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvLanguage.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
+    }
+    rvLanguage.apply {
+        layoutManager = LinearLayoutManager(mContext)
+        rvLanguageAdapter = LanguageListAdapter(mContext as FragmentActivity)
+        { projectId: String ->
+
+        }
+        adapter = rvLanguageAdapter
+        rvLanguageAdapter.submitList(languageList)
+    }
+
+    dialogView.show()
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = (mContext.getResources().getDisplayMetrics().heightPixels * 0.65)
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+fun showBodyTypeSelectionDialog(
+    mContext: Context,
+    bodyTypeList: ArrayList<GetBodyTypeLanguageResponse.Data.BodyType>,
+    mCallback: (year: String) -> Unit
+): Dialog {
+    lateinit var rvBodyTypeAdapter: BodyTypeListAdapter
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_body_type,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    val rvBodyType = dialogView.findViewById<RecyclerView>(R.id.rvBodyType)
+    val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
+
+    btnDone.setOnClickListener {
+        dialogView.cancel()
+        mCallback.invoke("Sd")
+    }
+    if (bodyTypeList.size > 0) {
+        rvBodyType.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvBodyType.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
+    }
+    rvBodyType.apply {
+        layoutManager = LinearLayoutManager(mContext)
+        rvBodyTypeAdapter = BodyTypeListAdapter(mContext as FragmentActivity)
+        { projectId: String ->
+
+        }
+        adapter = rvBodyTypeAdapter
+        rvBodyTypeAdapter.submitList(bodyTypeList)
+    }
+
+    dialogView.show()
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = (mContext.getResources().getDisplayMetrics().heightPixels * 0.65)
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+
+fun showSkinToneSelectionDialog(
+    mContext: Context,
+    bodyTypeList: ArrayList<GetBodyTypeLanguageResponse.Data.SkinTone>,
+    mCallback: (year: String) -> Unit
+): Dialog {
+    lateinit var rvBodyTypeAdapter: SkinToneListAdapter
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_skin_tone,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    val rvBodyType = dialogView.findViewById<RecyclerView>(R.id.rvSkinTone)
+    val btnDone = dialogView.findViewById<CustomButton>(R.id.btnDone)
+    val tvNoRecord = dialogView.findViewById<CustomTextView>(R.id.tvNoRecord)
+
+    btnDone.setOnClickListener {
+        dialogView.cancel()
+        mCallback.invoke("Sd")
+    }
+    if (bodyTypeList.size > 0) {
+        rvBodyType.visibility = View.VISIBLE
+        tvNoRecord.visibility = View.GONE
+    } else {
+        rvBodyType.visibility = View.GONE
+        tvNoRecord.visibility = View.VISIBLE
+    }
+    rvBodyType.apply {
+        layoutManager = LinearLayoutManager(mContext)
+        rvBodyTypeAdapter = SkinToneListAdapter(mContext as FragmentActivity)
+        { projectId: String ->
+
+        }
+        adapter = rvBodyTypeAdapter
+        rvBodyTypeAdapter.submitList(bodyTypeList)
+    }
+
+    dialogView.show()
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = (mContext.getResources().getDisplayMetrics().heightPixels * 0.65)
     dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
     return dialogView
 }

@@ -86,4 +86,7 @@ interface ApiService {
 
     @GET
     suspend fun getAllProjects(@Url url: String): Response<MyProjectResponse>
+
+    @GET
+    suspend fun getLanguageBodyType(@Url url: String): Response<GetBodyTypeLanguageResponse>
 }

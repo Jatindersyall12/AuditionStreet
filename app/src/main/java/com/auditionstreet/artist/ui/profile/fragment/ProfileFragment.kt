@@ -19,6 +19,7 @@ import com.auditionstreet.artist.R
 import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentProfileBinding
 import com.auditionstreet.artist.model.response.DeleteMediaResponse
+import com.auditionstreet.artist.model.response.GetBodyTypeLanguageResponse
 import com.auditionstreet.artist.model.response.ProfileResponse
 import com.auditionstreet.artist.model.response.UploadMediaResponse
 import com.auditionstreet.artist.storage.preference.Preferences
@@ -27,6 +28,7 @@ import com.auditionstreet.artist.ui.projects.adapter.WorkListAdapter
 import com.auditionstreet.artist.utils.*
 import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
+import com.google.gson.Gson
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.silo.model.request.WorkGalleryRequest
 import com.silo.utils.AppBaseFragment
@@ -73,9 +75,15 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     private var deleteMediaPos: Int = 0
 
     private var introVideoPath: String = ""
+    private var languageList: ArrayList<GetBodyTypeLanguageResponse.Data.Language> ?= null
+    private var bodyTypeList: ArrayList<GetBodyTypeLanguageResponse.Data.BodyType> ?= null
+    private var skinToneList: ArrayList<GetBodyTypeLanguageResponse.Data.SkinTone> ?= null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        languageList = ArrayList()
+        bodyTypeList = ArrayList()
+        skinToneList = ArrayList()
         setListeners()
         init()
         setObservers()
@@ -88,6 +96,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 AppConstants.USER_ID
             )
         )
+        viewModel.getLanguageBodyType(BuildConfig.BASE_URL + ApiConstant.GET_LANGUAGE_BODY_TYPE)
     }
 
     private fun setListeners() {
@@ -98,7 +107,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.imgIntroVideo.setOnClickListener(this)
         binding.imgPlay.setOnClickListener(this)
         binding.imgDelete.setOnClickListener(this)
-
+        binding.etxLanguage.setOnClickListener(this)
+        binding.etxBodyType.setOnClickListener(this)
+        binding.etxSkinTone.setOnClickListener(this)
     }
 
 
@@ -110,6 +121,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             handleApiCallback(it)
         })
         viewModel.deleteMedia.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModel.bodyTypeLanguage.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
 
@@ -140,6 +154,12 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                             totalGalleryVideos--
                         listGallery.removeAt(deleteMediaPos)
                         profileAdapter.notifyDataSetChanged()
+                    }
+                    ApiConstant.GET_LANGUAGE_BODY_TYPE -> {
+                       val getBodyTypeLanguageResponse = apiResponse.data as GetBodyTypeLanguageResponse
+                        languageList = getBodyTypeLanguageResponse.data.languages
+                        bodyTypeList = getBodyTypeLanguageResponse.data.bodyTypes
+                        skinToneList = getBodyTypeLanguageResponse.data.skinTones
                     }
                 }
             }
@@ -253,6 +273,57 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                         Manifest.permission.CAMERA,
                     )
                 )
+            }
+            R.id.etxLanguage ->{
+                showLanguageSelectionDialog(requireActivity(), languageList!!)
+                {
+                    val languageStringList = arrayListOf<String>()
+                    var user = ""
+                    for (i in 0 until languageList!!.size) {
+                        if (languageList!![i].isChecked) {
+                            languageStringList.add(languageList!![i].name)
+                            user += languageList!![i].name + " ,"
+                        }
+                    }
+                    if (user.length >= 1)
+                        binding.etxLanguage.text = user.substring(0, user.length - 1)
+                    else
+                        binding.etxLanguage.text = ""
+                }
+            }
+            R.id.etxBodyType ->{
+                showBodyTypeSelectionDialog(requireActivity(), bodyTypeList!!)
+                {
+                    val bodyTypeStringList = arrayListOf<String>()
+                    var user = ""
+                    for (i in 0 until bodyTypeList!!.size) {
+                        if (bodyTypeList!![i].isChecked) {
+                            bodyTypeStringList.add(bodyTypeList!![i].name)
+                            user += bodyTypeList!![i].name + " ,"
+                        }
+                    }
+                    if (user.length >= 1)
+                        binding.etxBodyType.text = user.substring(0, user.length - 1)
+                    else
+                        binding.etxBodyType.text = ""
+                }
+            }
+            R.id.etxSkinTone ->{
+                showSkinToneSelectionDialog(requireActivity(), skinToneList!!)
+                {
+                    val bodyTypeStringList = arrayListOf<String>()
+                    var user = ""
+                    for (i in 0 until skinToneList!!.size) {
+                        if (skinToneList!![i].isChecked) {
+                            bodyTypeStringList.add(skinToneList!![i].name)
+                            user += skinToneList!![i].name + " ,"
+                        }
+                    }
+                    if (user.length >= 1)
+                        binding.etxSkinTone.text = user.substring(0, user.length - 1)
+                    else
+                        binding.etxSkinTone.text = ""
+                }
             }
         }
     }
@@ -470,6 +541,28 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
 
     private fun requestProfileUpdate(
     ): HashMap<String, RequestBody> {
+        val gson = Gson()
+        val bodyTypeIdList = ArrayList<Int>()
+        val languageIdList = ArrayList<Int>()
+        val skinToneIdList = ArrayList<Int>()
+        for (i in 0 until skinToneList!!.size){
+            if (skinToneList!![i].isChecked){
+                skinToneIdList.add(skinToneList!![i].id)
+            }
+        }
+        for (i in 0 until bodyTypeList!!.size){
+            if (bodyTypeList!![i].isChecked){
+                bodyTypeIdList.add(bodyTypeList!![i].id)
+            }
+        }
+        for (i in 0 until languageList!!.size){
+            if (languageList!![i].isChecked){
+                languageIdList.add(languageList!![i].id)
+            }
+        }
+        val languageListString =  gson.convertToJsonString(languageIdList)
+        val bodyTypeListString =  gson.convertToJsonString(bodyTypeIdList)
+        val skinToneListString =  gson.convertToJsonString(skinToneIdList)
         val map = HashMap<String, RequestBody>()
         map[resources.getString(R.string.str_name_label)] =
             toRequestBody(etxName.text.toString())
@@ -482,11 +575,11 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         map[resources.getString(R.string.str_heightIn_label)] =
             toRequestBody(etxHeightIn.text.toString())
         map[resources.getString(R.string.str_bodytype_label)] =
-            toRequestBody(etxBodyType.text.toString())
+            toRequestBody(/*etxBodyType.text.toString()*/bodyTypeListString)
         map[resources.getString(R.string.str_skintone_label)] =
-            toRequestBody(etxSkinTone.text.toString())
+            toRequestBody(/*etxSkinTone.text.toString()*/skinToneListString)
         map[resources.getString(R.string.str_language_label)] =
-            toRequestBody(etxLanguage.text.toString())
+            toRequestBody(/*etxLanguage.text.toString()*/languageListString)
         map[resources.getString(R.string.str_bio)] =
             toRequestBody(etxBio.text.toString())
         map[resources.getString(R.string.str_artistId_label)] =

@@ -1,6 +1,7 @@
 package com.auditionstreet.artist.ui.profile.repository
 
 import com.auditionstreet.artist.model.response.DeleteMediaResponse
+import com.auditionstreet.artist.model.response.GetBodyTypeLanguageResponse
 import com.auditionstreet.artist.model.response.ProfileResponse
 import com.auditionstreet.artist.model.response.UploadMediaResponse
 import com.silo.api.ApiService
@@ -20,6 +21,8 @@ class ProfileRepository @Inject constructor(val apiService: ApiService) {
         profileImageFile: MultipartBody.Part?,
         introVideoUpload: MultipartBody.Part?
     ): Response<UploadMediaResponse> = apiService.uploadMedia(requestProfileUpdate,media,profileImageFile,introVideoUpload)
+
+    suspend fun getLanguageBodyType(url: String):Response<GetBodyTypeLanguageResponse> =apiService.getLanguageBodyType(url)
 
 }
 
