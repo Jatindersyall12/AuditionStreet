@@ -30,6 +30,7 @@ import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+const val EXTRA_QB_USERS = "qb_users"
 @AndroidEntryPoint
 class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListener {
     private val binding by viewBinding(FragmentHomeBinding::bind)
