@@ -196,9 +196,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.etxAge.setText(profileResponse.data[0]!!.artistDetails!!.age)
         binding.etxHeightFt.setText(profileResponse.data[0]!!.artistDetails!!.heightFt)
         binding.etxHeightIn.setText(profileResponse.data[0]!!.artistDetails!!.heightIn)
-        binding.etxBodyType.setText(profileResponse.data[0]!!.artistDetails!!.bodyType)
+        /*binding.etxBodyType.setText(profileResponse.data[0]!!.artistDetails!!.bodyType)
         binding.etxSkinTone.setText(profileResponse.data[0]!!.artistDetails!!.skinTone)
-        binding.etxLanguage.setText(profileResponse.data[0]!!.artistDetails!!.language)
+        binding.etxLanguage.setText(profileResponse.data[0]!!.artistDetails!!.language)*/
 
         if (profileResponse.data[0]!!.artistDetails!!.video!!.isNotEmpty()) {
             Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.video)

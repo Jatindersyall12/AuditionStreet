@@ -37,6 +37,7 @@ class AppCastingAgency : Application() {
     }
     override fun onCreate() {
         super.onCreate()
+        instance = this
         FacebookSdk.sdkInitialize(applicationContext)
         checkAppCredentials()
         checkChatSettings()

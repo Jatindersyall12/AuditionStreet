@@ -12,6 +12,7 @@ import com.auditionstreet.artist.storage.preference.Preferences
 import com.auditionstreet.artist.ui.projects.activity.ProfileActivity
 import com.auditionstreet.artist.ui.projects.activity.ProjectsActivity
 import com.auditionstreet.artist.utils.*
+import com.auditionstreet.castingagency.ui.chat.DialogsActivity
 import com.bumptech.glide.Glide
 import com.silo.ui.base.BaseActivity
 import com.silo.utils.changeIcons
@@ -95,7 +96,10 @@ class HomeActivity : BaseActivity() {
             )
         }
         binding.footerHome.llChat.setOnClickListener {
-            showToast(this, resources.getString(R.string.str_coming_soon))
+            val intent = Intent(this, DialogsActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
             changeIcons(
                 imageIcons,
                 activeIcons,

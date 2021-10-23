@@ -23,7 +23,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        buildConfigField 'String', 'BASE_URL', '"http://auditionstreet.in/bigrocks/public/index.php/api/"'
+        buildConfigField 'String', 'BASE_URL', '"http://auditionstreet.in/api/"'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

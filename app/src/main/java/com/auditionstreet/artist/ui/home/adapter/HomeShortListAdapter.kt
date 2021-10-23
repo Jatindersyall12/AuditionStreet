@@ -25,7 +25,8 @@ import java.util.*
 
 class HomeShortListAdapter(
     val mContext: FragmentActivity, private val mCallback: (
-        mposition: Int
+        mposition: Int,
+        isViewProfileClicked: Boolean
     ) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -65,7 +66,10 @@ class HomeShortListAdapter(
             is ConnectionHolder -> {
 //                holder.bind(differ.currentList[position])
                 holder.itemView.tvViewProfile.setOnClickListener {
-                    mCallback.invoke(position)
+                    mCallback.invoke(position, true)
+                }
+                holder.itemView.tvChat.setOnClickListener {
+                    mCallback.invoke(position, false)
                 }
                 holder.itemView.tvName.text = differ.currentList[position].title
                 if (differ.currentList[position].projectgender.equals("Male")){

@@ -2,6 +2,7 @@ package com.auditionstreet.artist.ui.home.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +23,12 @@ import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.artist.ui.projects.fragment.MyProjectsListingFragmentDirections
 import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showToast
+import com.auditionstreet.castingagency.ui.chat.DialogsActivity
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.quickblox.core.QBEntityCallback
+import com.quickblox.core.exception.QBResponseException
+import com.quickblox.users.QBUsers
+import com.quickblox.users.model.QBUser
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
@@ -160,10 +166,14 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
         binding.rvShortlist.apply {
             layoutManager = LinearLayoutManager(activity)
             shortListAdapter = HomeShortListAdapter(requireActivity())
-            { position: Int ->
-                AppConstants.CASTINGID = acceptedList!![position].castingId.toString()
-                val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
-                startActivity(i)
+            { position: Int, isViewProfileClicked: Boolean ->
+                if (isViewProfileClicked) {
+                    AppConstants.CASTINGID = acceptedList!![position].castingId.toString()
+                    val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                    startActivity(i)
+                }else{
+                    loadChatUsersFromQB(/*acceptedList[position].email*/"akshit@gmail.com")
+                }
             }
             adapter = shortListAdapter
             binding.rvShortlist.setLayoutManager(
@@ -228,5 +238,30 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                 //  requireActivity().finish()
             }
         }
+    }
+
+    /**
+     * Get Chat User List
+     */
+
+    private fun loadChatUsersFromQB(email: String) {
+        loadUsersWithoutQuery(email)
+    }
+
+    private fun loadUsersWithoutQuery(email: String) {
+        QBUsers.getUserByLogin(email).performAsync(object : QBEntityCallback<QBUser> {
+            override fun onSuccess(qbUser: QBUser, params: Bundle?) {
+                Log.e("user", "yes")
+                val i = Intent(requireActivity(), DialogsActivity::class.java)
+                i.putExtra(EXTRA_QB_USERS, qbUser)
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(i)
+                activity!!.finish()
+            }
+
+            override fun onError(e: QBResponseException) {
+                Log.e("user", "No")
+                showToast(requireActivity(),"No User Found")           }
+        })
     }
 }
