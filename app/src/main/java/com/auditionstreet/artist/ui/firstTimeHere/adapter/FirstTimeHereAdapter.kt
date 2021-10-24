@@ -74,7 +74,7 @@ class FirstTimeHereAdapter(
 
         fun bind(item: FirstTimeHereModel) = with(itemView) {
             itemView.ivData.setImageResource(item.firstTimeImage)
-            itemView.tvBriefOfScreen.text = item.firstTimeText
+           // itemView.tvBriefOfScreen.text = item.firstTimeText
         }
     }
 }

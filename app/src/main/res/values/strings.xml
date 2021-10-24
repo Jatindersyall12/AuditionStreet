@@ -332,5 +332,8 @@
     <string name="dialogs_cannot_delete_chat">You can not leave from dialog %s</string>
 
     <string name="dialogs_creation_error">Dialog creation errors</string>
+    <string name="skip">skip</string>
+    <string name="next">Next</string>
+    <string name="let_s_get_started">Let\'s Get Started</string>
 
 </resources>

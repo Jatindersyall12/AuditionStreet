@@ -91,11 +91,6 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     }
 
     private fun getUserProfile() {
-        viewModel.getProfile(
-            BuildConfig.BASE_URL + ApiConstant.GET_PROFILE + "/" + preferences.getString(
-                AppConstants.USER_ID
-            )
-        )
         viewModel.getLanguageBodyType(BuildConfig.BASE_URL + ApiConstant.GET_LANGUAGE_BODY_TYPE)
     }
 
@@ -160,6 +155,12 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                         languageList = getBodyTypeLanguageResponse.data.languages
                         bodyTypeList = getBodyTypeLanguageResponse.data.bodyTypes
                         skinToneList = getBodyTypeLanguageResponse.data.skinTones
+
+                        viewModel.getProfile(
+                            BuildConfig.BASE_URL + ApiConstant.GET_PROFILE + "/" + preferences.getString(
+                                AppConstants.USER_ID
+                            )
+                        )
                     }
                 }
             }
@@ -196,6 +197,47 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.etxAge.setText(profileResponse.data[0]!!.artistDetails!!.age)
         binding.etxHeightFt.setText(profileResponse.data[0]!!.artistDetails!!.heightFt)
         binding.etxHeightIn.setText(profileResponse.data[0]!!.artistDetails!!.heightIn)
+        var languages = ""
+        for (i in 0 until profileResponse.data[0]!!.artistDetails!!.language.size){
+            for (y in 0 until languageList!!.size){
+                if (languageList!![y].id == profileResponse.data[0]!!.artistDetails!!.language[i].id){
+                    languageList!![y].isChecked = true
+                    languages += languageList!![y].name + " ,"
+                }
+            }
+        }
+        if (languages.length >= 1)
+            binding.etxLanguage.text = languages.substring(0, languages.length - 1)
+        else
+            binding.etxLanguage.text = ""
+
+        var bodyTypes = ""
+        for (i in 0 until profileResponse.data[0]!!.artistDetails!!.bodyType.size){
+            for (y in 0 until bodyTypeList!!.size){
+                if (bodyTypeList!![y].id == profileResponse.data[0]!!.artistDetails!!.bodyType[i].id){
+                    bodyTypeList!![y].isChecked = true
+                    bodyTypes += bodyTypeList!![y].name + " ,"
+                }
+            }
+        }
+        if (bodyTypes.length >= 1)
+            binding.etxBodyType.text = bodyTypes.substring(0, bodyTypes.length - 1)
+        else
+            binding.etxBodyType.text = ""
+
+        var skinTones = ""
+        for (i in 0 until profileResponse.data[0]!!.artistDetails!!.skinTone.size){
+            for (y in 0 until skinToneList!!.size){
+                if (skinToneList!![y].id == profileResponse.data[0]!!.artistDetails!!.skinTone[i].id){
+                    skinToneList!![y].isChecked = true
+                    skinTones += skinToneList!![y].name + " ,"
+                }
+            }
+        }
+        if (skinTones.length >= 1)
+            binding.etxSkinTone.text = skinTones.substring(0, skinTones.length - 1)
+        else
+            binding.etxSkinTone.text = ""
         /*binding.etxBodyType.setText(profileResponse.data[0]!!.artistDetails!!.bodyType)
         binding.etxSkinTone.setText(profileResponse.data[0]!!.artistDetails!!.skinTone)
         binding.etxLanguage.setText(profileResponse.data[0]!!.artistDetails!!.language)*/

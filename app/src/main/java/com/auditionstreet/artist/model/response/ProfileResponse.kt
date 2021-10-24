@@ -2,7 +2,7 @@ package com.auditionstreet.artist.model.response
 
 import com.google.gson.annotations.SerializedName
 
- data class ProfileResponse(
+  data class ProfileResponse(
     @SerializedName("code")
     val code: Int,
     @SerializedName("data")
@@ -26,7 +26,7 @@ import com.google.gson.annotations.SerializedName
             @SerializedName("bio")
             val bio: String,
             @SerializedName("bodyType")
-            val bodyType: List<Any>,
+            val bodyType: List<BodyType>,
             @SerializedName("created_at")
             val createdAt: String,
             @SerializedName("deviceToken")
@@ -44,7 +44,7 @@ import com.google.gson.annotations.SerializedName
             @SerializedName("image")
             val image: String,
             @SerializedName("language")
-            val language: List<Any>,
+            val language: List<Language>,
             @SerializedName("name")
             val name: String,
             @SerializedName("phoneNumber")
@@ -52,7 +52,7 @@ import com.google.gson.annotations.SerializedName
             @SerializedName("planPurchase")
             val planPurchase: String,
             @SerializedName("skinTone")
-            val skinTone: List<Any>,
+            val skinTone: List<SkinTone>,
             @SerializedName("socialId")
             val socialId: String,
             @SerializedName("socialType")
@@ -65,7 +65,28 @@ import com.google.gson.annotations.SerializedName
             val video: String,
             @SerializedName("year")
             val year: String
-        )
+        ) {
+            data class BodyType(
+                @SerializedName("id")
+                val id: Int,
+                @SerializedName("name")
+                val name: String
+            )
+
+            data class Language(
+                @SerializedName("id")
+                val id: Int,
+                @SerializedName("name")
+                val name: String
+            )
+
+            data class SkinTone(
+                @SerializedName("id")
+                val id: Int,
+                @SerializedName("name")
+                val name: String
+            )
+        }
 
         data class Media(
             @SerializedName("created_at")
