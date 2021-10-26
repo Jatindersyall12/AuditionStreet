@@ -13,11 +13,13 @@ import com.auditionstreet.artist.BuildConfig
 import com.auditionstreet.artist.R
 import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentAllApplicationsBinding
+import com.auditionstreet.artist.model.response.DeleteMediaResponse
 import com.auditionstreet.artist.model.response.MyProjectResponse
 import com.auditionstreet.artist.storage.preference.Preferences
 import com.auditionstreet.artist.ui.home.activity.OtherUserProfileActivity
 import com.auditionstreet.artist.ui.home.adapter.AllApplicationsAdapter
 import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
+import com.auditionstreet.artist.ui.projects.fragment.MyProjectsListingFragmentDirections
 import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
@@ -99,9 +101,16 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
                         }
                     }
                     ApiConstant.ACCEPT_REJECT_PROJECT -> {
-                        projectList.data.removeAt(0)
-                        allApplicationsAdapter.submitList(projectList.data)
-                        manageCardAndTextViewVisibility()
+                        val response = apiResponse.data as DeleteMediaResponse
+                        if (response.code == 306){
+                            sharedViewModel.setDirection(
+                                AllApplicationsFragmentDirections.navigateToPlansList()
+                            )
+                        }else{
+                            projectList.data.removeAt(0)
+                            allApplicationsAdapter.submitList(projectList.data)
+                            manageCardAndTextViewVisibility()
+                        }
                     }
                     ApiConstant.REPORT_CASTING -> {
                         val acceptRejectProjectRequest = AcceptRejectProjectRequest()
@@ -136,20 +145,23 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
             { position: Int ->
                 if (position == 0){
                     AppConstants.CASTINGID = projectList.data[cardPosition].castingId.toString()
-                   /* val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
-                    startActivity(i)*/
-                    val intent = Intent(requireActivity(), RazorPayActivity::class.java)
+                    val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
+                    startActivity(i)
+                   /* val intent = Intent(requireActivity(), RazorPayActivity::class.java)
                     intent.putExtra(resources.getString(R.string.name), "Vishav")
                     intent.putExtra(resources.getString(R.string.email), "vishav@megamindcreations.com")
                     intent.putExtra(resources.getString(R.string.phone), "9815240558")
                     intent.putExtra(resources.getString(R.string.amount), "1")
                     intent.putExtra(resources.getString(R.string.currency), "INR")
-                    launchRazorPayActivity.launch(intent)
+                    launchRazorPayActivity.launch(intent)*/
+                    /*sharedViewModel.setDirection(
+                        AllApplicationsFragmentDirections.navigateToPlansList()
+                    )*/
                 }else if(position == 1){
                     val reportCastingRequest = ReportCastingRequest()
                     reportCastingRequest.artistId = preferences.getString(AppConstants.USER_ID)
                     reportCastingRequest.castingId = projectList.data[cardPosition].castingId.toString()
-                    reportCastingRequest.message = "test"
+                    reportCastingRequest.message = "Fake Post"
                     viewModel.reportCasting(reportCastingRequest)
                 }
             }

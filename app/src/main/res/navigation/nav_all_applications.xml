@@ -9,5 +9,20 @@
         android:label="@string/str_all_application"
         android:name="com.auditionstreet.artist.ui.home.fragment.AllApplicationsFragment"
         tools:layout="@layout/fragment_all_applications">
+
+        <action
+            android:id="@+id/navigateToPlansList"
+            app:destination="@id/plansFragment"
+            app:enterAnim="@anim/in_from_right"
+            app:exitAnim="@anim/out_to_left"
+            app:popEnterAnim="@anim/in_from_left"
+            app:popExitAnim="@anim/out_to_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/plansFragment"
+        android:label="@string/str_plans"
+        android:name="com.auditionstreet.artist.ui.plan.fragment.PlanListFragment"
+        tools:layout="@layout/fragment_plan_list">
     </fragment>
 </navigation>

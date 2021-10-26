@@ -7,7 +7,11 @@ object AppConstants {
     var PROFILE_ID=0
     const val GOOGLE_SIGNIN = 9001
     var USER_ID = "userId"
+    var PHONE_NUMBER = "phoneNumber"
+    var USER_EMAIL = "userEmail"
+    var USER_NAME = "userName"
     var FIREBASE_ID = "firebaseid"
+    var PLAN_ID = "planId"
 
     var USER_IMAGE = "userImage"
 

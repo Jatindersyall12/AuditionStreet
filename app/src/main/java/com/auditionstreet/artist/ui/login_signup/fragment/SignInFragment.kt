@@ -106,6 +106,18 @@ class SignInFragment : AppBaseFragment(R.layout.fragment_signin), View.OnClickLi
                             AppConstants.USER_IMAGE,
                             loginResponse.data[0]!!.image.toString()
                         )
+                        preferences.setString(
+                            AppConstants.PHONE_NUMBER,
+                            loginResponse.data[0]!!.phoneNumber
+                        )
+                        preferences.setString(
+                            AppConstants.USER_EMAIL,
+                            loginResponse.data[0]!!.email
+                        )
+                        preferences.setString(
+                            AppConstants.USER_NAME,
+                            loginResponse.data[0]!!.name
+                        )
                         // CHat Login
                         prepareUser(loginResponse.data[0]!!.name!!)
                        /* startActivity(Intent(requireActivity(), HomeActivity::class.java))

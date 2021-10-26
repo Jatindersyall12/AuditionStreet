@@ -34,6 +34,8 @@ data class LoginResponse(
         @SerializedName("updated_at")
         val updatedAt: String?,
         @SerializedName("year")
-        val year: String?
+        val year: String?,
+        @SerializedName("phoneNumber")
+        val phoneNumber: String?
     )
 }

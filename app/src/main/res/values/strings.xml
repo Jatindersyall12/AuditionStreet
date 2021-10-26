@@ -336,4 +336,12 @@
     <string name="next">Next</string>
     <string name="let_s_get_started">Let\'s Get Started</string>
 
+    <!--Plan Fragment-->
+    <string name="str_plans">Plan Fragment</string>
+    <string name="no_plans">No Plans Available</string>
+    <string name="str_plan_heading">Plan:</string>
+    <string name="str_price">Price:</string>
+    <string name="Rs">\u20B9</string>
+    <string name="buy_plan">Buy Plan</string>
+
 </resources>

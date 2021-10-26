@@ -129,9 +129,22 @@ class SignUpFragment : AppBaseFragment(R.layout.fragment_signup), View.OnClickLi
                             AppConstants.USER_ID,
                             signUpResponse.data!![0]!!.id.toString()
                         )
+
                         preferences.setString(
                             AppConstants.USER_IMAGE,
                             signUpResponse.data[0]!!.image
+                        )
+                        preferences.setString(
+                            AppConstants.PHONE_NUMBER,
+                            signUpResponse.data[0]!!.phoneNumber
+                        )
+                        preferences.setString(
+                            AppConstants.USER_EMAIL,
+                            signUpResponse.data[0]!!.email
+                        )
+                        preferences.setString(
+                            AppConstants.USER_NAME,
+                            signUpResponse.data[0]!!.name
                         )
                         // CHat Signup
                         prepareUser(signUpResponse.data[0]!!.name!!)

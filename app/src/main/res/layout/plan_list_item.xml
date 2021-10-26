@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:cardElevation="@dimen/_4sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvPlan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:text="@string/str_plan_heading"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvNoOfRequests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="Supporting Actor(Male)"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPlan" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="@string/str_price"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_15sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvNoOfRequests" />
+
+            <com.auditionstreet.artist.customviews.CustomTextViewBold
+                android:id="@+id/tvPriceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/tvPrice"
+                android:textSize="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@+id/tvNoOfRequests" />
+
+            <com.auditionstreet.artist.customviews.CustomButton
+                android:id="@+id/btnBuyPlan"
+                android:layout_width="@dimen/_85sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:text="@string/buy_plan"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:background="@drawable/button_round_view_detail"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

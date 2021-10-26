@@ -5,6 +5,7 @@ import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_GROUP
 import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_PROJECT
 import com.auditionstreet.artist.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.artist.api.ApiConstant.Companion.LOGIN
+import com.auditionstreet.artist.api.ApiConstant.Companion.PURCHASE_PLAN
 import com.auditionstreet.artist.api.ApiConstant.Companion.REPORT_CASTING
 import com.auditionstreet.artist.api.ApiConstant.Companion.SIGN_UP
 import com.auditionstreet.artist.api.ApiConstant.Companion.UPLOAD_MEDIA
@@ -89,4 +90,11 @@ interface ApiService {
 
     @GET
     suspend fun getLanguageBodyType(@Url url: String): Response<GetBodyTypeLanguageResponse>
+
+    @GET
+    suspend fun getPlansList(@Url url: String): Response<PlansListResponse>
+
+    @POST(PURCHASE_PLAN)
+    suspend fun purchasePlan(@Body purchasePlanRequest: PurchasePlanRequest): Response<DeleteMediaResponse>
+
 }
