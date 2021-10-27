@@ -39,7 +39,7 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
     CardStackListener, View.OnClickListener {
     private val binding by viewBinding(FragmentAllApplicationsBinding::bind)
     private lateinit var allApplicationsAdapter: AllApplicationsAdapter
-    private val manager by lazy { CardStackLayoutManager(requireActivity(), this) }
+    private var manager: CardStackLayoutManager ?= null
     private val viewModel: ProjectViewModel by viewModels()
     private lateinit var projectList: MyProjectResponse;
     private var cardPosition = 0
@@ -51,8 +51,10 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         applicationId = AppConstants.APPLICATIONID
+        manager = CardStackLayoutManager(requireActivity(), this)
         setListeners()
         setObservers()
+        if (manager != null)
         init()
         getAllApplications()
     }
@@ -139,6 +141,13 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (manager != null){
+            manager = null
+        }
+    }
+
     private fun init() {
         binding.cardAllApplications.apply {
             allApplicationsAdapter = AllApplicationsAdapter(requireActivity())
@@ -166,17 +175,17 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
                 }
             }
             adapter = allApplicationsAdapter
-            manager.setStackFrom(StackFrom.None)
-            manager.setVisibleCount(1)
-            manager.setTranslationInterval(12.0f)
-            manager.setScaleInterval(0.95f)
-            manager.setSwipeThreshold(0.3f)
-            manager.setMaxDegree(80.0f)
-            manager.setDirections(Direction.HORIZONTAL)
-            manager.setCanScrollHorizontal(true)
-            manager.setCanScrollVertical(true)
-            manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
-            manager.setOverlayInterpolator(LinearInterpolator())
+            manager!!.setStackFrom(StackFrom.None)
+            manager!!.setVisibleCount(1)
+            manager!!.setTranslationInterval(12.0f)
+            manager!!.setScaleInterval(0.95f)
+            manager!!.setSwipeThreshold(0.3f)
+            manager!!.setMaxDegree(80.0f)
+            manager!!.setDirections(Direction.HORIZONTAL)
+            manager!!.setCanScrollHorizontal(true)
+            manager!!.setCanScrollVertical(true)
+            manager!!.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
+            manager!!.setOverlayInterpolator(LinearInterpolator())
             binding.cardAllApplications.layoutManager = manager
             binding.cardAllApplications.adapter = allApplicationsAdapter
             binding.cardAllApplications.itemAnimator.apply {

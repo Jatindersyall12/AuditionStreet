@@ -343,5 +343,7 @@
     <string name="str_price">Price:</string>
     <string name="Rs">\u20B9</string>
     <string name="buy_plan">Buy Plan</string>
+    <string name="select_plan">Select Plan</string>
+
 
 </resources>

@@ -22,6 +22,7 @@ import com.auditionstreet.artist.databinding.FragmentPlanListBinding
 import com.auditionstreet.artist.databinding.FragmentProfileBinding
 import com.auditionstreet.artist.model.response.*
 import com.auditionstreet.artist.storage.preference.Preferences
+import com.auditionstreet.artist.ui.home.activity.AllApplicationActivity
 import com.auditionstreet.artist.ui.plan.adapter.PlansListAdapter
 import com.auditionstreet.artist.ui.plan.viewmodel.PlansViewModel
 import com.auditionstreet.artist.ui.profile.viewmodel.ProfileViewModel
@@ -42,7 +43,7 @@ import com.silo.utils.network.Resource
 import com.silo.utils.network.Status
 import com.silo.utils.viewbinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -84,6 +85,9 @@ class PlanListFragment : AppBaseFragment(R.layout.fragment_plan_list), View.OnCl
         viewModel.users.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
+        viewModel.purchasePlan.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
     }
 
     private fun handleApiCallback(apiResponse: Resource<Any>) {
@@ -97,7 +101,7 @@ class PlanListFragment : AppBaseFragment(R.layout.fragment_plan_list), View.OnCl
                         setAdapter(apiResponse.data as PlansListResponse)
                     }
                     ApiConstant.PURCHASE_PLAN -> {
-                        findNavController().popBackStack()
+                        requireActivity().onBackPressed()
                     }
                 }
             }

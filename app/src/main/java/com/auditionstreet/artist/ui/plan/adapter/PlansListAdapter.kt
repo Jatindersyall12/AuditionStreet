@@ -82,7 +82,7 @@ class PlansListAdapter(
         fun bind(item: PlansListResponse.Data) = with(itemView) {
             val rnd = Random()
             itemView.tvPlan.text = "Plan: "+item.name
-            itemView.tvNoOfRequests.text = "Request: "+item.requests
+            itemView.tvNoOfRequests.text = "Number Of Applications \nYou Can Apply: "+item.requests
             itemView.tvPriceValue.text = context.resources.getString(R.string.Rs)+" "+
                     item.price
             var color: Int
