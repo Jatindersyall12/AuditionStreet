@@ -89,7 +89,9 @@ data class HomeApiResponse(
             @SerializedName("projectheightIn")
             val projectheightIn: String,
             @SerializedName("projectgender")
-            val projectgender: String
+            val projectgender: String,
+            @SerializedName("castingEmail")
+            val castingEmail: String
         )
 
         data class PendingRequest(

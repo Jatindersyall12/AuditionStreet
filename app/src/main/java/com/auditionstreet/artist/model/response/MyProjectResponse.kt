@@ -4,48 +4,75 @@ import com.google.gson.annotations.SerializedName
 
 data class MyProjectResponse(
     @SerializedName("code")
-    val code: Int?,
+    val code: Int,
     @SerializedName("data")
     val `data`: ArrayList<Data>,
     @SerializedName("msg")
-    val msg: String?
+    val msg: String
 ) {
     data class Data(
         @SerializedName("age")
-        val age: String?,
+        val age: String,
         @SerializedName("bodyType")
-        val bodyType: String?,
+        val bodyType: List<BodyType>,
         @SerializedName("castingId")
-        val castingId: String?,
+        val castingId: String,
         @SerializedName("created_at")
-        val createdAt: String?,
+        val createdAt: String,
+        @SerializedName("deleteStatus")
+        val deleteStatus: String,
         @SerializedName("description")
-        val description: String?,
+        val description: String,
         @SerializedName("exp")
-        val exp: String?,
+        val exp: String,
         @SerializedName("fromDate")
-        val fromDate: String?,
+        val fromDate: String,
         @SerializedName("gender")
-        val gender: String?,
+        val gender: String,
         @SerializedName("heightFt")
-        val heightFt: String?,
+        val heightFt: String,
         @SerializedName("heightIn")
-        val heightIn: String?,
+        val heightIn: String,
         @SerializedName("id")
-        val id: Int?,
+        val id: Int,
         @SerializedName("lang")
-        val lang: String?,
+        val lang: List<Lang>,
         @SerializedName("location")
-        val location: String?,
+        val location: String,
+        @SerializedName("skinTone")
+        val skinTone: List<SkinTone>,
         @SerializedName("title")
-        val title: String?,
+        val title: String,
         @SerializedName("toDate")
-        val toDate: String?,
+        val toDate: String,
         @SerializedName("updated_at")
-        val updatedAt: String?,
+        val updatedAt: String,
         @SerializedName("castingStatus")
         val castingStatus: String?,
         @SerializedName("projectId")
         val projectId: String?
-    )
+    ) {
+        data class BodyType(
+            @SerializedName("id")
+            val id: Int,
+            @SerializedName("name")
+            val name: String
+        )
+
+        data class Lang(
+            @SerializedName("id")
+            val id: Int,
+            @SerializedName("name")
+            val name: String
+        )
+
+        data class SkinTone(
+            @SerializedName("id")
+            val id: Int,
+            @SerializedName("name")
+            val name: String
+        )
+    }
 }
+
+

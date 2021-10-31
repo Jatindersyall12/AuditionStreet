@@ -47,6 +47,8 @@ data class ProjectResponse(
         @SerializedName("castingStatus")
         val castingStatus: String?,
         @SerializedName("projectId")
-        val projectId: String?
+        val projectId: String?,
+        @SerializedName("castingEmail")
+        val castingEmail: String
     )
 }

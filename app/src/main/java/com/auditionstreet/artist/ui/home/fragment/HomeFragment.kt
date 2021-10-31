@@ -172,7 +172,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                     val i = Intent(requireActivity(), OtherUserProfileActivity::class.java)
                     startActivity(i)
                 }else{
-                    loadChatUsersFromQB(/*acceptedList[position].email*/"akshit@gmail.com")
+                    loadChatUsersFromQB(acceptedList[position].castingEmail/*"akshit@gmail.com"*/)
                 }
             }
             adapter = shortListAdapter
@@ -249,8 +249,10 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
     }
 
     private fun loadUsersWithoutQuery(email: String) {
+        showProgress()
         QBUsers.getUserByLogin(email).performAsync(object : QBEntityCallback<QBUser> {
             override fun onSuccess(qbUser: QBUser, params: Bundle?) {
+                hideProgress()
                 Log.e("user", "yes")
                 val i = Intent(requireActivity(), DialogsActivity::class.java)
                 i.putExtra(EXTRA_QB_USERS, qbUser)
@@ -260,6 +262,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
             }
 
             override fun onError(e: QBResponseException) {
+                hideProgress()
                 Log.e("user", "No")
                 showToast(requireActivity(),"No User Found")           }
         })

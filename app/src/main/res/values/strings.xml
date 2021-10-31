@@ -65,7 +65,7 @@
     <string name="str_account">Account</string>
 
     <!-- other user  -->
-    <string name="str_experiances">Experiance</string>
+    <string name="str_experiances">Experience</string>
     <string name="str_applied_project">Applied Projects</string>
     <string name="str_home_selected_project">Selected Projects</string>
     <string name="str_image">Images</string>
@@ -119,7 +119,7 @@
     <string name="str_bio_label">bio</string>
     <string name="str_artistId_label">artistId</string>
     <string name="str_email_profile">Email</string>
-    <string name="experiance">Experiance in years</string>
+    <string name="experiance">Experience in years</string>
     <string name="tv_pending">Pending</string>
     <string name="tv_rejected">Rejected</string>
     <string name="tv_accepted">Accepted</string>
@@ -163,7 +163,7 @@
     <string name="str_height_In_enter">Enter Height(IN)</string>
 
     <string name="str_height_In">Height(In)</string>
-    <string name="str_experiance">Experiance</string>
+    <string name="str_experiance">Experience</string>
     <string name="str_language">Language</string>
     <string name="str_shooting_Date">Shooting Date</string>
     <string name="str_date_start">Select Start Date</string>
@@ -176,7 +176,7 @@
     <string name="str_dates_project">Shooting Dates</string>
     <string name="str_location_project">Location</string>
     <string name="str_desc">Description</string>
-    <string name="str_type">Type here...</string>
+    <string name="str_type">Type here…</string>
     <string name="str_subadmin">Sub-Admins</string>
     <string name="str_create">Create</string>
     <string name="str_admin">Please select admins</string>
@@ -210,7 +210,7 @@
 
     <string name="str_casting_agency">Casting Agency</string>
     <string name="str_year">00</string>
-    <string name="str_bio_profile">Please enter bio here...</string>
+    <string name="str_bio_profile">Please enter bio here…</string>
     <string name="str_year_in_industry">Years In Industry</string>
     <string name="str_work">Work</string>
     <string name="str_into_video">Intro Video</string>
@@ -344,6 +344,9 @@
     <string name="Rs">\u20B9</string>
     <string name="buy_plan">Buy Plan</string>
     <string name="select_plan">Select Plan</string>
+    <string name="application_accepted">Application Accepted</string>
+    <string name="application_rejected">Application Rejected</string>
+    <string name="plan">\"Plan: \"</string>
 
 
 </resources>

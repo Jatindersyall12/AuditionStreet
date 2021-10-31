@@ -74,7 +74,14 @@ class AllApplicationsAdapter(
                 holder.itemView.tvAgeDetail.text = differ.currentList[position].age
                 holder.itemView.tvHeightDetail.text = differ.currentList[position].heightFt+"."+
                         differ.currentList[position].heightIn
-                holder.itemView.tvLanguageDetail.text = differ.currentList[position].lang
+                var languages = ""
+                    for (y in 0 until differ.currentList[position].lang.size){
+                            languages += differ.currentList[position].lang[y].name + " ,"
+                    }
+                if (languages.length >= 1)
+                    holder.itemView.tvLanguageDetail.text = languages.substring(0, languages.length - 1)
+                else
+                    holder.itemView.tvLanguageDetail.text = ""
                 holder.itemView.tvLocationDetail.text = differ.currentList[position].location
                 holder.itemView.tvDescDetail.text = differ.currentList[position].description
                 holder.itemView.tvGender.text = differ.currentList[position].gender

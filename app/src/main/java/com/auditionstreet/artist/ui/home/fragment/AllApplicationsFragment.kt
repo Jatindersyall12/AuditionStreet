@@ -13,6 +13,7 @@ import com.auditionstreet.artist.BuildConfig
 import com.auditionstreet.artist.R
 import com.auditionstreet.artist.api.ApiConstant
 import com.auditionstreet.artist.databinding.FragmentAllApplicationsBinding
+import com.auditionstreet.artist.model.response.AddGroupResponse
 import com.auditionstreet.artist.model.response.DeleteMediaResponse
 import com.auditionstreet.artist.model.response.MyProjectResponse
 import com.auditionstreet.artist.storage.preference.Preferences
@@ -103,8 +104,9 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
                         }
                     }
                     ApiConstant.ACCEPT_REJECT_PROJECT -> {
-                        val response = apiResponse.data as DeleteMediaResponse
+                        val response = apiResponse.data as AddGroupResponse
                         if (response.code == 306){
+                            showToast(requireContext(), response.msg)
                             sharedViewModel.setDirection(
                                 AllApplicationsFragmentDirections.navigateToPlansList()
                             )
@@ -214,7 +216,7 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
             acceptRejectProjectRequest.userStatus = "1"
             acceptRejectProjectRequest.artistId = preferences.getString(AppConstants.USER_ID)
             viewModel.acceptRejectProject(acceptRejectProjectRequest)
-            showToast(requireActivity(), "Application Rejected")
+            showToast(requireActivity(), getString(R.string.application_rejected))
         }
         else {
             val acceptRejectProjectRequest = AcceptRejectProjectRequest()
@@ -223,7 +225,7 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
             acceptRejectProjectRequest.userStatus = "1"
             acceptRejectProjectRequest.artistId = preferences.getString(AppConstants.USER_ID)
             viewModel.acceptRejectProject(acceptRejectProjectRequest)
-            showToast(requireActivity(), "Application Accepted")
+            showToast(requireActivity(), getString(R.string.application_accepted))
         }
     }
 

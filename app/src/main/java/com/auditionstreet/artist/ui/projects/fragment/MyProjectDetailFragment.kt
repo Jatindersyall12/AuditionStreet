@@ -92,10 +92,18 @@ class MyProjectDetailFragment : AppBaseFragment(R.layout.fragment_my_project_det
         else
             binding.tvHeightDetail.text = myProjectResponse.data[0].projectDetails.heightFt+"."+
                     myProjectResponse.data[0].projectDetails.heightIn
-        if (myProjectResponse.data[0].projectDetails.lang.isEmpty())
+       /* if (myProjectResponse.data[0].projectDetails.lang.isEmpty())
             binding.tvLanguageDetail.text = resources.getString(R.string.str_empty)
         else
-            binding.tvLanguageDetail.text = myProjectResponse.data[0].projectDetails.lang
+            binding.tvLanguageDetail.text = myProjectResponse.data[0].projectDetails.lang*/
+        var languages = ""
+        for (i in 0 until myProjectResponse.data[0].projectDetails.lang.size){
+                    languages += myProjectResponse.data[0].projectDetails.lang[i].name + " ,"
+        }
+        if (languages.length >= 1)
+            binding.tvLanguageDetail.text = languages.substring(0, languages.length - 1)
+        else
+            binding.tvLanguageDetail.text = resources.getString(R.string.str_empty)
         if (myProjectResponse.data[0].projectDetails.fromDate.isEmpty())
             binding.tvDatesDetail.text = resources.getString(R.string.str_empty)
         else

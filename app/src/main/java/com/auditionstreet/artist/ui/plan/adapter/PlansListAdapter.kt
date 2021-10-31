@@ -80,28 +80,10 @@ class PlansListAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: PlansListResponse.Data) = with(itemView) {
-            val rnd = Random()
-            itemView.tvPlan.text = "Plan: "+item.name
+            itemView.tvPlan.text = context.getString(R.string.plan)+" "+item.name
             itemView.tvNoOfRequests.text = "Number Of Applications \nYou Can Apply: "+item.requests
             itemView.tvPriceValue.text = context.resources.getString(R.string.Rs)+" "+
                     item.price
-            var color: Int
-            var status: String
-           /* if (item.castingStatus == "0") {
-                color = ContextCompat.getColor(mContext, R.color.yellow)
-                status = resources.getString(R.string.tv_pending)
-            } else if (item.castingStatus == "1") {
-                color = ContextCompat.getColor(mContext, R.color.green)
-                status = resources.getString(R.string.tv_accepted)
-            } else {
-                color = ContextCompat.getColor(mContext, R.color.red)
-                status = resources.getString(R.string.tv_rejected)
-            }*/
-            //  val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-            //itemView.btnViewDetail.background.setTint(color)
-            //itemView.tvProject.setTextColor(color)
-           /* itemView.tvStatusDetail.setTextColor(color)
-            itemView.tvStatusDetail.setText(status)*/
 
         }
     }
