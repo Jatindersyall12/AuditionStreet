@@ -137,7 +137,7 @@ class ProfileViewModel @ViewModelInject constructor(
                             fileIntroVideo
                         )
                 }
-                if (!selectedProfileImage.isEmpty()) {
+                if (profileImageFile != null && !selectedProfileImage.isEmpty()) {
                     val profileImage =
                         RequestBody.create(
                             IMAGE_EXTENSION.toMediaTypeOrNull(),
