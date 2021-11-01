@@ -1,5 +1,6 @@
 package com.silo.ui.base
 
+import android.app.Activity
 import android.content.Context
 import android.text.TextUtils
 import android.util.Log
@@ -36,27 +37,28 @@ abstract class BaseFragment(@LayoutRes layoutResId: Int) : Fragment(layoutResId)
         toolbar: Toolbar,
         title: String,
         backBtnVisibility: Boolean,
-        profilePic: Boolean = true
+        profilePic: Boolean = true,
+        activity: Activity
     ) {
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar!!.setDisplayShowTitleEnabled(false)
-        toolBarImage.visibility = if (backBtnVisibility) View.VISIBLE else View.GONE
+        activity.toolBarImage.visibility = if (backBtnVisibility) View.VISIBLE else View.GONE
         if (!TextUtils.isEmpty(title)) {
-            toolbarTitle.text = title
+            activity.toolbarTitle.text = title
         }
         if (backBtnVisibility) {
-            toolbarTitle.visibility = View.GONE
-            imgBack.visibility = View.VISIBLE
+            activity.toolbarTitle.visibility = View.GONE
+            activity.imgBack.visibility = View.VISIBLE
         } else {
-            toolbarTitle.visibility = View.VISIBLE
-            imgBack.visibility = View.GONE
+            activity.toolbarTitle.visibility = View.VISIBLE
+            activity.imgBack.visibility = View.GONE
         }
         if (!profilePic)
-            toolBarImage.visibility = View.GONE
+            activity.toolBarImage.visibility = View.GONE
         if (!TextUtils.isEmpty(title)) {
-            toolbarTitle.text = title
+            activity.toolbarTitle.text = title
         }
-        imgBack.setOnClickListener {
+        activity.imgBack.setOnClickListener {
             Log.e("sd","dggf")
             findNavController().popBackStack()
             // findNavController().popBackStack()

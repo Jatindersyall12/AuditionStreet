@@ -69,6 +69,7 @@ class PlanListFragment : AppBaseFragment(R.layout.fragment_plan_list), View.OnCl
         super.onViewCreated(view, savedInstanceState)
         setObservers()
         init()
+        setUpToolbar(requireActivity().toolbar,getString(R.string.select_plan),false,true,requireActivity())
     }
 
     private fun getPlans() {

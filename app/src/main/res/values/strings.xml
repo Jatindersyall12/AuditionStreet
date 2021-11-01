@@ -346,7 +346,7 @@
     <string name="select_plan">Select Plan</string>
     <string name="application_accepted">Application Accepted</string>
     <string name="application_rejected">Application Rejected</string>
-    <string name="plan">\"Plan: \"</string>
+    <string name="plan">\Plan: \</string>
 
 
 </resources>
