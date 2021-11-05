@@ -22,6 +22,7 @@ import com.auditionstreet.artist.ui.home.adapter.AllApplicationsAdapter
 import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.artist.ui.projects.fragment.MyProjectsListingFragmentDirections
 import com.auditionstreet.artist.utils.AppConstants
+import com.auditionstreet.artist.utils.showPaymentDialog
 import com.auditionstreet.artist.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.megamind.razorpay.RazorPayActivity
@@ -106,10 +107,12 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
                     ApiConstant.ACCEPT_REJECT_PROJECT -> {
                         val response = apiResponse.data as AddGroupResponse
                         if (response.code == 306){
-                            showToast(requireContext(), response.msg)
-                            sharedViewModel.setDirection(
-                                AllApplicationsFragmentDirections.navigateToPlansList()
-                            )
+                           // showToast(requireContext(), response.msg)
+                            showPaymentDialog(requireActivity(), response.msg){
+                                sharedViewModel.setDirection(
+                                    AllApplicationsFragmentDirections.navigateToPlansList()
+                                )
+                            }
                         }else{
                             projectList.data.removeAt(0)
                             allApplicationsAdapter.submitList(projectList.data)

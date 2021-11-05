@@ -788,3 +788,39 @@ fun showSkinToneSelectionDialog(
     dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
     return dialogView
 }
+
+fun showPaymentDialog(
+    mContext: Activity,
+    message: String,
+    mCallback: (pos: Int) -> Unit
+): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_delete,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val tvTitle = dialogView.findViewById<CustomTextView>(R.id.tvExit)
+    val tvYes = dialogView.findViewById<CustomTextView>(R.id.tvYes)
+    val tvNo = dialogView.findViewById<CustomTextView>(R.id.tvNo)
+    tvYes.text = mContext.getString(R.string.select_plan)
+    tvTitle.text = message
+    tvYes.setOnClickListener {
+        mCallback.invoke(1)
+        dialogView.dismiss()
+    }
+    tvNo.setOnClickListener {
+        dialogView.dismiss()
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = 450
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
