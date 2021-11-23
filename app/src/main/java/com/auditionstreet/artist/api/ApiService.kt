@@ -5,9 +5,11 @@ import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_GROUP
 import com.auditionstreet.artist.api.ApiConstant.Companion.ADD_PROJECT
 import com.auditionstreet.artist.api.ApiConstant.Companion.GET_PROJECTS
 import com.auditionstreet.artist.api.ApiConstant.Companion.LOGIN
+import com.auditionstreet.artist.api.ApiConstant.Companion.LOGOUT
 import com.auditionstreet.artist.api.ApiConstant.Companion.PURCHASE_PLAN
 import com.auditionstreet.artist.api.ApiConstant.Companion.REPORT_CASTING
 import com.auditionstreet.artist.api.ApiConstant.Companion.SIGN_UP
+import com.auditionstreet.artist.api.ApiConstant.Companion.SUPPORT
 import com.auditionstreet.artist.api.ApiConstant.Companion.UPLOAD_MEDIA
 import com.auditionstreet.artist.model.response.*
 import com.silo.model.request.*
@@ -96,5 +98,11 @@ interface ApiService {
 
     @POST(PURCHASE_PLAN)
     suspend fun purchasePlan(@Body purchasePlanRequest: PurchasePlanRequest): Response<DeleteMediaResponse>
+
+    @POST(SUPPORT)
+    suspend fun addSupport(@Body supportRequest: SupportRequest): Response<DeleteMediaResponse>
+
+    @POST(LOGOUT)
+    suspend fun logout(@Body logoutRequest: LogoutRequest): Response<DeleteMediaResponse>
 
 }

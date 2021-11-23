@@ -2,7 +2,6 @@ package com.auditionstreet.artist.ui.projects.fragment
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
@@ -23,6 +22,7 @@ import com.auditionstreet.artist.model.response.GetBodyTypeLanguageResponse
 import com.auditionstreet.artist.model.response.ProfileResponse
 import com.auditionstreet.artist.model.response.UploadMediaResponse
 import com.auditionstreet.artist.storage.preference.Preferences
+import com.auditionstreet.artist.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.artist.ui.profile.viewmodel.ProfileViewModel
 import com.auditionstreet.artist.ui.projects.adapter.WorkListAdapter
 import com.auditionstreet.artist.utils.*
@@ -30,6 +30,8 @@ import com.bumptech.glide.Glide
 import com.esafirm.imagepicker.features.ImagePicker
 import com.google.gson.Gson
 import com.leo.wikireviews.utils.livedata.EventObserver
+import com.silo.model.request.LogoutRequest
+import com.silo.model.request.SupportRequest
 import com.silo.model.request.WorkGalleryRequest
 import com.silo.utils.AppBaseFragment
 import com.silo.utils.network.Resource
@@ -105,6 +107,8 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.etxLanguage.setOnClickListener(this)
         binding.etxBodyType.setOnClickListener(this)
         binding.etxSkinTone.setOnClickListener(this)
+        binding.btnLogout.setOnClickListener(this)
+        binding.btnSupport.setOnClickListener(this)
     }
 
 
@@ -119,6 +123,12 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
             handleApiCallback(it)
         })
         viewModel.bodyTypeLanguage.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModel.logout.observe(viewLifecycleOwner, EventObserver {
+            handleApiCallback(it)
+        })
+        viewModel.support.observe(viewLifecycleOwner, EventObserver {
             handleApiCallback(it)
         })
 
@@ -161,6 +171,13 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                                 AppConstants.USER_ID
                             )
                         )
+                    }
+                    ApiConstant.LOGOUT ->{
+                        preferences.clearPreferences()
+                        val intent = Intent(requireContext(), AuthorizedUserActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        startActivity(intent)
+                        requireActivity().finish()
                     }
                 }
             }
@@ -365,6 +382,24 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                         binding.etxSkinTone.text = user.substring(0, user.length - 1)
                     else
                         binding.etxSkinTone.text = ""
+                }
+            }
+            R.id.btnSupport ->{
+                showSupportDialog(requireActivity()){
+                    val supportRequest = SupportRequest()
+                    supportRequest.message = it
+                    supportRequest.phoneNumber = preferences.getString(AppConstants.PHONE_NUMBER)
+                    supportRequest.userType = "Artist"
+                    viewModel.supportApi(supportRequest)
+                }
+            }
+            R.id.btnLogout ->{
+                showLogoutDialog(requireActivity())
+                {
+                   val logoutRequest = LogoutRequest()
+                    logoutRequest.userId = preferences.getString(AppConstants.USER_ID)
+                    logoutRequest.userType = "artist"
+                    viewModel.logout(logoutRequest)
                 }
             }
         }

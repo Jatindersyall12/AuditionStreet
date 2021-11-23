@@ -23,6 +23,7 @@ import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
 import com.auditionstreet.artist.ui.projects.fragment.MyProjectsListingFragmentDirections
 import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showPaymentDialog
+import com.auditionstreet.artist.utils.showReportDialog
 import com.auditionstreet.artist.utils.showToast
 import com.leo.wikireviews.utils.livedata.EventObserver
 import com.megamind.razorpay.RazorPayActivity
@@ -172,11 +173,13 @@ class AllApplicationsFragment :   AppBaseFragment(R.layout.fragment_all_applicat
                         AllApplicationsFragmentDirections.navigateToPlansList()
                     )*/
                 }else if(position == 1){
-                    val reportCastingRequest = ReportCastingRequest()
-                    reportCastingRequest.artistId = preferences.getString(AppConstants.USER_ID)
-                    reportCastingRequest.castingId = projectList.data[cardPosition].castingId.toString()
-                    reportCastingRequest.message = "Fake Post"
-                    viewModel.reportCasting(reportCastingRequest)
+                    showReportDialog(requireActivity()){
+                        val reportCastingRequest = ReportCastingRequest()
+                        reportCastingRequest.artistId = preferences.getString(AppConstants.USER_ID)
+                        reportCastingRequest.castingId = projectList.data[cardPosition].castingId.toString()
+                        reportCastingRequest.message = it
+                        viewModel.reportCasting(reportCastingRequest)
+                    }
                 }
             }
             adapter = allApplicationsAdapter

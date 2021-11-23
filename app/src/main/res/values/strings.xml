@@ -123,6 +123,7 @@
     <string name="tv_pending">Pending</string>
     <string name="tv_rejected">Rejected</string>
     <string name="tv_accepted">Accepted</string>
+    <string name="str_logout">Do you want to logout ? </string>
 
 
 
@@ -226,6 +227,9 @@
     <string name="str_done">Done</string>
     <string name="str_add_media">Add Media</string>
     <string name="tv_media">No Media Found.</string>
+    <string name="notification">Notification</string>
+    <string name="log_out">Logout</string>
+    <string name="support">Support</string>
     <!-- Choose Media -->
     <string name="str_choose_media">Choose Media</string>
     <string name="str_choose_video">Choose Video</string>
@@ -347,7 +351,8 @@
     <string name="application_accepted">Application Accepted</string>
     <string name="application_rejected">Application Rejected</string>
     <string name="plan">\Plan: \</string>
-
+    <string name="str_submit">Submit</string>
+    <string name="enter_message">Enter Message</string>
 
 
 </resources>

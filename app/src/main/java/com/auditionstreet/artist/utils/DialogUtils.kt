@@ -16,6 +16,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -29,6 +30,7 @@ import com.abedelazizshe.lightcompressorlibrary.VideoCompressor
 import com.abedelazizshe.lightcompressorlibrary.VideoQuality
 import com.auditionstreet.artist.R
 import com.auditionstreet.artist.customviews.CustomButton
+import com.auditionstreet.artist.customviews.CustomEditText
 import com.auditionstreet.artist.customviews.CustomTextView
 import com.auditionstreet.artist.customviews.CustomTextViewBold
 import com.auditionstreet.artist.model.response.AllAdminResponse
@@ -138,6 +140,7 @@ fun showMediaDialog(
 ): Dialog {
     val dialogView = Dialog(mContext)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),
@@ -178,6 +181,7 @@ fun showDeleteDialog(
 ): Dialog {
     val dialogView = Dialog(mContext)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),
@@ -210,6 +214,7 @@ fun showIntroVideoDialog(
 ): Dialog {
     val dialogView = Dialog(mContext)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),
@@ -564,6 +569,7 @@ fun showExitDialog(
 ): Dialog {
     val dialogView = Dialog(mContext)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),
@@ -590,6 +596,115 @@ fun showExitDialog(
     return dialogView
 }
 
+fun showLogoutDialog(
+    mContext: Activity,
+    mCallback: () -> Unit
+): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_logout,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val tvYes = dialogView.findViewById<CustomTextView>(R.id.tvYes)
+    val tvNo = dialogView.findViewById<CustomTextView>(R.id.tvNo)
+    tvYes.setOnClickListener {
+        dialogView.dismiss()
+        mCallback.invoke()
+    }
+    tvNo.setOnClickListener {
+        dialogView.dismiss()
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    val height = 450
+    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    return dialogView
+}
+
+fun showSupportDialog(
+    mContext: Activity,
+    mCallback: (message: String) -> Unit
+): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_support,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val etMessage = dialogView.findViewById<CustomEditText>(R.id.etMessage)
+    val tvYes = dialogView.findViewById<CustomTextView>(R.id.tvYes)
+    val tvNo = dialogView.findViewById<CustomTextView>(R.id.tvNo)
+    tvYes.setOnClickListener {
+        val message = etMessage.text.toString()
+        if (!message.isNullOrEmpty()) {
+            dialogView.dismiss()
+            mCallback.invoke(message)
+        }else{
+            showToast(mContext, "Please enter message")
+        }
+    }
+    tvNo.setOnClickListener {
+        dialogView.dismiss()
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    dialogView.getWindow()!!.setLayout(width.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+    return dialogView
+}
+
+fun showReportDialog(
+    mContext: Activity,
+    mCallback: (message: String) -> Unit
+): Dialog {
+    val dialogView = Dialog(mContext)
+    dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
+    val binding =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(mContext),
+            R.layout.popup_report,
+            null,
+            false
+        )
+    dialogView.setContentView(binding.root)
+    dialogView.setCancelable(false)
+    dialogView.show()
+    val etMessage = dialogView.findViewById<CustomEditText>(R.id.etMessage)
+    val tvYes = dialogView.findViewById<CustomTextView>(R.id.tvYes)
+    val tvNo = dialogView.findViewById<CustomTextView>(R.id.tvNo)
+    tvYes.setOnClickListener {
+        val message = etMessage.text.toString()
+        if (!message.isNullOrEmpty()) {
+            dialogView.dismiss()
+            mCallback.invoke(message)
+        }else{
+            showToast(mContext, "Please enter message")
+        }
+    }
+    tvNo.setOnClickListener {
+        dialogView.dismiss()
+    }
+
+    val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
+    dialogView.getWindow()!!.setLayout(width.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+    return dialogView
+}
+
 fun showVideoOrImageValidation(
     mContext: Context,
     errorString: String,
@@ -597,6 +712,7 @@ fun showVideoOrImageValidation(
     ): Dialog {
     val dialogView = Dialog(mContext)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),
@@ -625,6 +741,7 @@ fun showProgressDialog(
 ): Dialog {
     val dialogView = Dialog(mContext)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),
@@ -796,6 +913,7 @@ fun showPaymentDialog(
 ): Dialog {
     val dialogView = Dialog(mContext)
     dialogView.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialogView.getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent)
     val binding =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(mContext),

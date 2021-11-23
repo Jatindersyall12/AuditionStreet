@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +15,8 @@ import com.auditionstreet.artist.ui.home.activity.FirstTimeHereActivity
 import com.auditionstreet.artist.ui.home.activity.HomeActivity
 import com.auditionstreet.artist.ui.login_signup.AuthorizedUserActivity
 import com.auditionstreet.artist.utils.AppConstants
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import com.silo.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -21,6 +24,7 @@ import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
@@ -32,6 +36,24 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        // Get firebase token after logout
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
+            if (!TextUtils.isEmpty(token)) {
+                Log.d("Token", "retrieve token successful : $token")
+                if (preferences.getString(AppConstants.FIREBASE_ID).isNullOrEmpty()){
+                    preferences.setString(AppConstants.FIREBASE_ID, token)
+                }
+            } else {
+                Log.w("Token", "token should not be null...")
+            }
+        }.addOnFailureListener { e: java.lang.Exception? -> }.addOnCanceledListener {}
+            .addOnCompleteListener { task: Task<String> ->
+                Log.v(
+                    "Token",
+                    "This is the token : " + task.result
+                )
+            }
+
         lifecycleScope.launch {
             delay(3000)
             if (preferences.getString(AppConstants.USER_ID).isEmpty()) {
