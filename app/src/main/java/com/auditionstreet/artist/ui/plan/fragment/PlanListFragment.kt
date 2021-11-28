@@ -135,7 +135,7 @@ class PlanListFragment : AppBaseFragment(R.layout.fragment_plan_list), View.OnCl
                 intent.putExtra(resources.getString(R.string.phone),
                     preferences.getString(AppConstants.PHONE_NUMBER))
                 intent.putExtra(resources.getString(R.string.amount),
-                /*plansList[position.toInt()].price*/"1")
+                plansList[position.toInt()].price)
                 intent.putExtra(resources.getString(R.string.currency), "INR")
                 launchRazorPayActivity.launch(intent)
             }

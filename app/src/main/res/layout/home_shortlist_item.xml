@@ -26,13 +26,17 @@
 
                 <com.auditionstreet.artist.customviews.CustomTextViewBold
                     android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_40sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_14sdp"
                     android:text="Jennie"
+                    android:maxLines="1"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13sdp"
+                    android:ellipsize="end"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

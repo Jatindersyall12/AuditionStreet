@@ -44,11 +44,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:text="@string/str_price"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvNoOfRequests" />
 
@@ -73,6 +75,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/button_round_view_detail"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
