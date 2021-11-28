@@ -388,7 +388,9 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 showSupportDialog(requireActivity()){
                     val supportRequest = SupportRequest()
                     supportRequest.message = it
+                    if(!preferences.getString(AppConstants.PHONE_NUMBER).isNullOrEmpty())
                     supportRequest.phoneNumber = preferences.getString(AppConstants.PHONE_NUMBER)
+                    else supportRequest.phoneNumber = "Social"
                     supportRequest.userType = "Artist"
                     viewModel.supportApi(supportRequest)
                 }

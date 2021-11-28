@@ -591,8 +591,7 @@ fun showExitDialog(
     }
 
     val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
-    val height = 450
-    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    dialogView.getWindow()!!.setLayout(width.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
     return dialogView
 }
 
@@ -624,8 +623,7 @@ fun showLogoutDialog(
     }
 
     val width = (mContext.getResources().getDisplayMetrics().widthPixels * 0.90)
-    val height = 450
-    dialogView.getWindow()!!.setLayout(width.toInt(), height.toInt())
+    dialogView.getWindow()!!.setLayout(width.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
     return dialogView
 }
 
