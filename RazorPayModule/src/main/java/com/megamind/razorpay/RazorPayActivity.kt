@@ -75,7 +75,7 @@ class RazorPayActivity : AppCompatActivity(), PaymentResultListener {
         try {
             val options = JSONObject()
             options.put("name", name)
-            options.put("description", "Razorpay Payment Test")
+            options.put("description", "Auditionstreet Solutions Llp")
             options.put("currency", currency)
             options.put("amount", convertedAmount)
             val preFill = JSONObject()

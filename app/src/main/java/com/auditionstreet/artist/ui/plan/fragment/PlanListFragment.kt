@@ -135,7 +135,7 @@ class PlanListFragment : AppBaseFragment(R.layout.fragment_plan_list), View.OnCl
                 intent.putExtra(resources.getString(R.string.phone),
                     preferences.getString(AppConstants.PHONE_NUMBER))
                 intent.putExtra(resources.getString(R.string.amount),
-                plansList[position.toInt()].price)
+                /*plansList[position.toInt()].price*/"1")
                 intent.putExtra(resources.getString(R.string.currency), "INR")
                 launchRazorPayActivity.launch(intent)
             }
@@ -175,7 +175,7 @@ class PlanListFragment : AppBaseFragment(R.layout.fragment_plan_list), View.OnCl
             purchasePlanRequest.transactionId =
                 data!!.getStringExtra(resources.getString(R.string.transaction_id)).toString()
             purchasePlanRequest.paymentMode = "Credit Card"
-            viewModel.purchasePlanApi(purchasePlanRequest)
+       //     viewModel.purchasePlanApi(purchasePlanRequest)
         } else if (result.resultCode == Activity.RESULT_CANCELED){
             data!!.getStringExtra(resources.getString(R.string.error_message))?.let { Log.e("message", it) }
         }
