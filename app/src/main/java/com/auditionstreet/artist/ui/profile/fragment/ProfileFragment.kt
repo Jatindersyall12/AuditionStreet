@@ -3,12 +3,14 @@ package com.auditionstreet.artist.ui.projects.fragment
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,6 +29,8 @@ import com.auditionstreet.artist.ui.profile.viewmodel.ProfileViewModel
 import com.auditionstreet.artist.ui.projects.adapter.WorkListAdapter
 import com.auditionstreet.artist.utils.*
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.esafirm.imagepicker.features.ImagePicker
 import com.google.gson.Gson
 import com.leo.wikireviews.utils.livedata.EventObserver
@@ -45,6 +49,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
 import javax.inject.Inject
+import javax.sql.DataSource
 import kotlin.collections.ArrayList
 import kotlin.collections.set
 
@@ -260,10 +265,36 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
         binding.etxLanguage.setText(profileResponse.data[0]!!.artistDetails!!.language)*/
 
         if (profileResponse.data[0]!!.artistDetails!!.video!!.isNotEmpty()) {
-            Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.video)
+            /*Glide.with(this).load(profileResponse.data[0]!!.artistDetails!!.video)
+                .into(binding.imgIntroVideo)*/
+            Glide.with(this)
+                .load(profileResponse.data[0]!!.artistDetails!!.video)
+                .listener(object : RequestListener<Drawable?> {
+                    override fun onLoadFailed(
+                        @Nullable e: GlideException?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        showToast(requireActivity(), "Video loading failed")
+                        binding.progress.setVisibility(View.GONE)
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                        dataSource: com.bumptech.glide.load.DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        binding.imgPlay.visibility = View.VISIBLE
+                        introVideoPath = profileResponse.data[0]!!.artistDetails!!.video.toString()
+                        binding.progress.setVisibility(View.GONE)
+                        return false
+                    }
+                })
                 .into(binding.imgIntroVideo)
-            binding.imgPlay.visibility = View.VISIBLE
-            introVideoPath = profileResponse.data[0]!!.artistDetails!!.video.toString()
         }
         listGallery.clear()
         for (i in 0 until profileResponse.data[0]!!.media!!.size) {
@@ -408,6 +439,7 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
     }
 
     private fun showIntroVideoDialog() {
+
         showIntroVideoDialog(requireActivity())
         {
             if (it == 0) {
@@ -566,10 +598,39 @@ class ProfileFragment : AppBaseFragment(R.layout.fragment_profile), View.OnClick
                 processVideo(result.data!!.data!!, requireActivity())
                 { path: String ->
                     if (isIntroVideo) {
-                        Glide.with(this).load(path)
+                       // binding.progress.setVisibility(View.GONE)
+                        /*Glide.with(this).load(path)
+                            .into(binding.imgIntroVideo)*/
+                        Glide.with(this)
+                            .load(path)
+                            .listener(object : RequestListener<Drawable?> {
+                                override fun onLoadFailed(
+                                    @Nullable e: GlideException?,
+                                    model: Any?,
+                                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    showToast(requireActivity(), "Video loading failed")
+                                    binding.progress.setVisibility(View.GONE)
+                                    return false
+                                }
+
+                                override fun onResourceReady(
+                                    resource: Drawable?,
+                                    model: Any?,
+                                    target: com.bumptech.glide.request.target.Target<Drawable?>?,
+                                    dataSource: com.bumptech.glide.load.DataSource?,
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    binding.imgPlay.visibility = View.VISIBLE
+                                    introVideoPath = path
+                                    binding.progress.setVisibility(View.GONE)
+                                    return false
+                                }
+                            })
                             .into(binding.imgIntroVideo)
-                        introVideoPath = path
-                        binding.imgPlay.visibility = View.VISIBLE
+                        /*introVideoPath = path
+                        binding.imgPlay.visibility = View.VISIBLE*/
                     } else {
                         request.path = path
                         request.isImage = false

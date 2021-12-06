@@ -448,6 +448,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvArtistVideo">
 
+                    <ProgressBar
+                        android:id="@+id/progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toTopOf="@+id/imgIntroVideo"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgIntroVideo"
+                        app:layout_constraintStart_toStartOf="@id/imgIntroVideo"
+                        app:layout_constraintEnd_toEndOf="@id/imgIntroVideo"/>
+
                     <com.github.siyamed.shapeimageview.RoundedImageView
                         android:id="@+id/imgIntroVideo"
                         android:layout_width="@dimen/_70sdp"
@@ -471,6 +481,7 @@
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:contentDescription="@string/str_capture"
                         android:src="@drawable/edit"
+                        app:tint="@color/grey_dark"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
