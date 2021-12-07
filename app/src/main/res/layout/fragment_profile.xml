@@ -481,7 +481,6 @@
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:contentDescription="@string/str_capture"
                         android:src="@drawable/edit"
-                        app:tint="@color/grey_dark"
                         android:visibility="invisible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

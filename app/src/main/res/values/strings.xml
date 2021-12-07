@@ -241,7 +241,7 @@
     <string name="str_image_error">You can choose max 4 images at a time.If you want to edit please delete previous image.</string>
     <string name="str_video_error">You can choose max 1 video at a time.If you want to edit please delete previous one.</string>
     <string name="str_gallery">Gallery Video</string>
-    <string name="str_capture">Capture Video</string>
+    <string name="str_capture">(Recommended) Capture Video</string>
 
 
     <!-- Exit Popup -->
