@@ -20,6 +20,7 @@ import com.auditionstreet.artist.ui.home.adapter.HomeShortListAdapter
 import com.auditionstreet.artist.ui.home.adapter.ProjectListAdapter
 import com.auditionstreet.artist.ui.home.viewmodel.HomeViewModel
 import com.auditionstreet.artist.ui.home.viewmodel.ProjectViewModel
+import com.auditionstreet.artist.ui.projects.activity.ProfileActivity
 import com.auditionstreet.artist.ui.projects.fragment.MyProjectsListingFragmentDirections
 import com.auditionstreet.artist.utils.AppConstants
 import com.auditionstreet.artist.utils.showToast
@@ -77,6 +78,7 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
     private fun setListeners() {
         binding.tvShortListMore.setOnClickListener(this)
         binding.tvViewAllApplication.setOnClickListener(this)
+        binding.clCompleteProfileErrorBand.setOnClickListener(this)
     }
 
 
@@ -102,6 +104,11 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                         setAdapter(homeScreenDetailResponse)
                         setApplicationAdapter(homeScreenDetailResponse)
                         setShortListAdapter(homeScreenDetailResponse)
+                        if (homeScreenDetailResponse.data.isprofileupdated.equals("false")){
+                           binding.clCompleteProfileErrorBand.visibility = View.VISIBLE
+                        }else{
+                            binding.clCompleteProfileErrorBand.visibility = View.GONE
+                        }
                     }
                 }
             }
@@ -236,6 +243,11 @@ class HomeFragment : AppBaseFragment(R.layout.fragment_home), View.OnClickListen
                 // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(i)
                 //  requireActivity().finish()
+            }
+            R.id.clCompleteProfileErrorBand ->{
+                val intent = Intent(requireActivity(), ProfileActivity::class.java)
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
             }
         }
     }

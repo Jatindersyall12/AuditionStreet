@@ -16,7 +16,9 @@ data class HomeApiResponse(
         @SerializedName("acceptList")
         val acceptList: List<Accept>,
         @SerializedName("pendingRequest")
-        val pendingRequest: List<PendingRequest>
+        val pendingRequest: List<PendingRequest>,
+        @SerializedName("isprofileupdated")
+        val isprofileupdated: String
     ) {
         data class Project(
             @SerializedName("id")

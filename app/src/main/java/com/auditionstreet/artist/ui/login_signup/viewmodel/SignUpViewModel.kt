@@ -170,7 +170,7 @@ class SignUpViewModel @ViewModelInject constructor(
                 )
             )
             return
-        } else if (!isValidEmail(email)) {
+        }/* else if (!isValidEmail(email)) {
             _sign_up.postValue(
                 Event(
                     Resource.requiredResource(
@@ -180,7 +180,7 @@ class SignUpViewModel @ViewModelInject constructor(
                 )
             )
             return
-        } else if (mobileNumber.length < 10) {
+        }*/ else if (mobileNumber.length < 10) {
             _sign_up.postValue(
                 Event(
                     Resource.requiredResource(
